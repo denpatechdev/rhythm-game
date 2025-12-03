@@ -1,0 +1,74 @@
+{
+  "dialogue": [
+    {
+      "start": [
+        {
+          "name": "Musicman",
+          "text": "Hello!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "add_spr",
+              "args": [
+                "assets/images/homura.png",
+                "homura",
+                "right",
+                80.0
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Musicman",
+          "text": "Let's start playing music!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "move",
+              "args": [
+                "homura",
+                "left",
+                80.0,
+                1.0
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Musicman",
+          "text": "DFJK are the keys!",
+          "attrs": [],
+          "events": [],
+          "choices": []
+        },
+        {
+          "name": "Musicman",
+          "text": "Are you ready?",
+          "attrs": [],
+          "events": [],
+          "choices": [
+            {
+              "text": "Yes",
+              "event": {
+                "name": "rhythm",
+                "args": []
+              }
+            },
+            {
+              "text": "No",
+              "event": {
+                "name": "rhythm",
+                "args": []
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "branches": [
+    "start"
+  ]
+}
