@@ -9,6 +9,10 @@ class SongState extends FlxState {
     public var curBeat:Int = 0;
     public var curMeasure:Int = 0;
 
+	public var combo:Int = 0;
+	public var highestCombo:Int = 0;
+
+
     public function new() {
         super();
     }
@@ -26,6 +30,11 @@ class SongState extends FlxState {
         if (curStep != oldStep && curStep > 0) {
             onStep(curStep);
         }
+
+		if (combo > highestCombo)
+		{
+			highestCombo = combo;
+		}
 
         super.update(elapsed);
     }

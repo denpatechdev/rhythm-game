@@ -129,6 +129,11 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			openSubState(new PauseMenu());
+		}
+
 		if (FlxG.keys.justPressed.ENTER) {
 			progressDialogue();
 		}

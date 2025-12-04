@@ -56,7 +56,7 @@ class MuseRhythmState extends SongState {
         "Bad" => 0
     ];
     var dPressed:Bool;
-    var gPressed:Bool;
+	var fPressed:Bool;
 	var kPressed:Bool;
 	var jPressed:Bool;
 
@@ -64,16 +64,15 @@ class MuseRhythmState extends SongState {
         super();
         song = data;
         Conductor.bpm = song.bpm;
-        // FlxG.sound.playMusic(data.songPath);
-        FlxG.sound.playMusic("assets/music/we3.mp3");
+		FlxG.sound.playMusic(data.songPath);
+		
         stepsInSong = Math.floor((FlxG.sound.music.length / 1000) / (60 / Conductor.bpm )) * 4;
         FlxG.watch.add(this, 'curStep', 'curStep');
         FlxG.watch.add(this, 'curBeat', 'curBeat');
         FlxG.watch.add(this, 'curMeasure', 'curMeasure');
 
 
-        var fuck = [
-            "D#4" => 2,
+		var fuck = [
             "E4" => 1,
             "F4" => 0
         ];
@@ -128,10 +127,7 @@ class MuseRhythmState extends SongState {
         add(hitBar);
         sustainGroup = new FlxTypedGroup<FlxSprite>();
         add(sustainGroup);
-        add(noteGroup);
-        // var n =new Note(1000, 0, 1000);
-        // n.isSustain =true;
-        // noteGroup.add(n);
+		add(noteGroup);
         for (note in notes) {
             var n = noteGroup.add(new Note(note.time, note.column, 'muse', note.holdTime));
             if (note.holdTime > 0) {
@@ -150,16 +146,30 @@ class MuseRhythmState extends SongState {
             }
         });
 
+		FlxG.sound.music.onComplete = () ->
+		{
+			FlxG.switchState(() ->
+			{
+				new WinState(highestCombo, noteAccuracies, hitNotes, score);
+			});
+		}
+
+
         super.create();
     }
 
     override function update(elapsed) {
 
-        dPressed = gPressed = jPressed = kPressed = false;
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			openSubState(new PauseMenu());
+		}
+
+		dPressed = fPressed = jPressed = kPressed = false;
 
         noteGroup.forEachAlive((note) -> {
             note.x = hitX - (FlxG.sound.music.time - note.time) * noteSpeed;
-            note.y = (FlxG.height / 5) + FlxG.height/5*(note.column);
+			note.y = (FlxG.height / 4) + FlxG.height / 4 * (note.column);
             if (!note.hit && note.isSustain) {
                 note.sustainSprite.y = note.y;
                 note.sustainSprite.color = note.color;
@@ -177,18 +187,21 @@ class MuseRhythmState extends SongState {
                     }
                     dPressed = true;
                 }
-                if (FlxG.keys.justPressed.G && !gPressed) {
-                    if (canHitNote(note) && note.column == 1) {
+				else if (FlxG.keys.justPressed.F && !fPressed)
+				{
+					if (canHitNote(note) && note.column == 0)
+					{
                         if (!note.isSustain) {
                             hitNote(note);
                         } else {
                             holdNoteHit(note);
                         }
                     }
-                    gPressed = true;
+					fPressed = true;
                 }
                 if (FlxG.keys.justPressed.J && !jPressed) {
-                        if (canHitNote(note) && note.column == 2) {
+					if (canHitNote(note) && note.column == 1)
+					{
                         if (!note.isSustain) {
                             hitNote(note);
                             // trace("BYE");
@@ -198,7 +211,24 @@ class MuseRhythmState extends SongState {
                         }
                     }
                     jPressed = true;
-                }
+				}
+				else if (FlxG.keys.justPressed.K && !kPressed)
+				{
+					if (canHitNote(note) && note.column == 1)
+					{
+						if (!note.isSustain)
+						{
+							hitNote(note);
+							// trace("BYE");
+						}
+						else
+						{
+							// trace("HI AGAIN");
+							holdNoteHit(note);
+						}
+					}
+					jPressed = true;
+				}
         }
 
         if (!note.hit && (note.time - FlxG.sound.music.time) < -hitLimit) {
@@ -237,23 +267,19 @@ class MuseRhythmState extends SongState {
             if (note.hit && note.alive && note.isSustain) {
                     switch (note.column) {
                         case 0:
-                            if (FlxG.keys.pressed.D) {
+						if (FlxG.keys.pressed.D || FlxG.keys.pressed.F)
+						{
                                 holdNotesStatus[note] = "press-0";
                             } else {
                                 holdNotesStatus[note] = "pass";
                             }
                         case 1:
-                            if (FlxG.keys.pressed.G) {
-                                holdNotesStatus[note] = "press-1";
+						if (FlxG.keys.pressed.J || FlxG.keys.pressed.K)
+						{
+							holdNotesStatus[note] = "press-1";
                             }else {
                                 holdNotesStatus[note] = "pass";
-                            }
-                        case 2:
-                            if (FlxG.keys.pressed.J) {
-                                holdNotesStatus[note] = "press-2";
-                            } else {
-                                holdNotesStatus[note] = "pass";
-                            }
+						}
                     }
 
                 function press(i:Note) {
