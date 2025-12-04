@@ -53,14 +53,20 @@
               "text": "Yes",
               "event": {
                 "name": "rhythm",
-                "args": []
+                "args": [
+                  "yunyun",
+                  "assets/data/song.json"
+                ]
               }
             },
             {
               "text": "No",
               "event": {
                 "name": "rhythm",
-                "args": []
+                "args": [
+                  "muse",
+                  "assets/data/song.json"
+                ]
               }
             }
           ]

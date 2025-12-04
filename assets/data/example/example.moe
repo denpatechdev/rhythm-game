@@ -3,6 +3,6 @@ Musicman[add_spr, assets/images/homura.png, homura, right, 80]: Hello!
 Musicman[move, homura, left, 80, 1]: Let's start playing music!
 Musicman: DFJK are the keys!
 Musicman: Are you ready?
--> Yes: rhythm
--> No: rhythm
+-> Yes: rhythm, yunyun, assets/data/song.json
+-> No: rhythm, muse, assets/data/song.json
 ///

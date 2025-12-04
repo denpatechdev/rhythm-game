@@ -107,9 +107,19 @@ class PlayState extends FlxState
 		registerEvent('play_sound', placeholderFunc);
 
 		registerEvent('rhythm', (args, isChoice) -> {
+			if (args[0] == 'yunyun')
+			{
 			FlxG.switchState(() -> {
-			return new MuseRhythmState(Json.parse(Assets.getText('assets/data/song.json')));
-		});
+					return new YunYunRhythmState(Json.parse(Assets.getText(args[1])));
+				});
+			}
+			else
+			{
+				FlxG.switchState(() ->
+				{
+					return new MuseRhythmState(Json.parse(Assets.getText(args[1])));
+				});
+			}
 		});
 
 		runDialogue();

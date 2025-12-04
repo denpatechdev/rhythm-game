@@ -153,7 +153,7 @@ class YunYunRhythmState extends SongState {
             if (!note.hit && note.isSustain) {
                 note.sustainSprite.x = note.x;
                 note.sustainSprite.color = note.color;
-                note.sustainSprite.y = note.y - note.sustainSprite.height;
+				note.sustainSprite.y = (note.y + note.height) - note.sustainSprite.height;
             }
             
             if (!note.hit && Math.abs(FlxG.sound.music.time - note.time) < hitLimit) {
@@ -223,6 +223,10 @@ class YunYunRhythmState extends SongState {
     function holdNoteHit(note:Note) {
         note.hit = true;
         note.noteGraphic.kill();
+		score += getNoteScore(note);
+		noteAccuracies += getHitAccuracy(note);
+		var diff = note.time - FlxG.sound.music.time;
+		note.holdTime += diff;		
         holdNotes.push(note);
         holdNotesStatus[note] = "press-"+note.column;
         trace(note, holdNotesStatus[note]);
@@ -271,8 +275,8 @@ class YunYunRhythmState extends SongState {
                     note.holdTime -= (elapsed*1000);
                     note.sustainSprite.setGraphicSize(note.sustainSprite.width, note.holdTime*noteSpeed);
                     note.sustainSprite.updateHitbox();
-                    if (note.time < FlxG.sound.music.time)
-                        note.sustainSprite.y = hitY - (note.sustainSprite.height); //- note.sustainSprite.height;
+					// if (note.time < FlxG.sound.music.time)
+					note.sustainSprite.y = hitY - note.sustainSprite.height;
                 }
 
                 if (!note.missed && note.hit && note.holdTime <= 0 && (oldStatus[note] == press(note) && (holdNotesStatus[note] == "pass" || holdNotesStatus[note] == press(note)))) {

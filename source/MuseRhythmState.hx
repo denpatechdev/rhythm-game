@@ -220,6 +220,10 @@ class MuseRhythmState extends SongState {
         note.hit = true;
         note.noteGraphic.kill();
         holdNotes.push(note);
+		score += getNoteScore(note);
+		noteAccuracies += getHitAccuracy(note);
+		var diff = note.time - FlxG.sound.music.time;
+		note.holdTime += diff;
         holdNotesStatus[note] = "press-"+note.column;
         trace(note, holdNotesStatus[note]);
         trace(holdNotes.contains(note));
@@ -260,9 +264,8 @@ class MuseRhythmState extends SongState {
                 if (holdNotesStatus[note] == press(note)) {
                     note.holdTime -= (elapsed*1000);
                     note.sustainSprite.setGraphicSize(note.holdTime*noteSpeed, Note.NOTE_HEIGHT);
-                    note.sustainSprite.updateHitbox();
-                    if (note.time < FlxG.sound.music.time)
-                        note.sustainSprite.x = hitX; //- note.sustainSprite.height;
+					note.sustainSprite.updateHitbox();
+					note.sustainSprite.x = hitX; //- note.sustainSprite.height;
                 }
 
                 if (!note.missed && note.hit && note.holdTime <= 0 && (oldStatus[note] == press(note) && (holdNotesStatus[note] == "pass" || holdNotesStatus[note] == press(note)))) {
