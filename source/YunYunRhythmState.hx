@@ -4,6 +4,7 @@ import data.SongData.Song;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import haxe.Json;
@@ -12,6 +13,8 @@ import moonchart.formats.Quaver;
 import moonchart.parsers.MidiParser;
 import moonchart.parsers.QuaverParser;
 import openfl.Assets;
+
+using StringTools;
 
 class YunYunRhythmState extends SongState {
 
@@ -25,16 +28,22 @@ class YunYunRhythmState extends SongState {
     public static var song:Song;
 
     var hitLimit:Float = 210;
-    var noteCount:Int;
-    var score:Float;
-    var noteAccuracies:Float;
-    var hitNotes:Int;
+	var noteCount:Int = 0;
+	var score:Float = 0;
+	var noteAccuracies:Float = 0;
+	var hitNotes:Int = 0;
 
     var stepsInSong:Int = 0;
     var ratingText:FlxText;
 
+	var health:Float = 100;
+
     var notes:Array<{time:Float, column:Int, holdTime:Float}> = [];
 
+	var codeText:FlxText;
+
+	var theText:Array<String>;
+	var nextText:String;
 
     public var ratings:Map<String, Int> = [
         "Perfect" => 0,
@@ -59,7 +68,8 @@ class YunYunRhythmState extends SongState {
         FlxG.watch.add(this, 'curBeat', 'curBeat');
         FlxG.watch.add(this, 'curMeasure', 'curMeasure');
 
-
+		theText = Assets.getText("assets/data/code.txt").split(' ');
+		nextText = theText[0];
         var fuck = [
             "D4" => 3,
             "D#4" => 2,
@@ -111,16 +121,21 @@ class YunYunRhythmState extends SongState {
     //     }];
     // }
 
+	var codeTime:Float = .15;
+	var codeIdx:Int = 0;
+	var codeTimer:Float = 0.0;
+
     override function create() {
+		codeText = new FlxText(20, 20, FlxG.width - 2, "", 16);  
         noteGroup = new FlxTypedGroup<Note>();
 		hitBar = new FlxSprite(0, hitY - 20).makeGraphic(FlxG.width, 20);
+		add(codeText);
         add(hitBar);
         sustainGroup = new FlxTypedGroup<FlxSprite>();
         add(sustainGroup);
         add(noteGroup);
-        // var n =new Note(1000, 0, 1000);
-        // n.isSustain =true;
-        // noteGroup.add(n);
+		keyboardSound.loadEmbedded("assets/sounds/Keyboard.mp3");
+		keyboardSound.volume = .35;
         for (note in notes) {
             var n = noteGroup.add(new Note(note.time, note.column, note.holdTime));
             if (note.holdTime > 0) {
@@ -143,7 +158,7 @@ class YunYunRhythmState extends SongState {
 		{
 			FlxG.switchState(() ->
 			{
-				new WinState(highestCombo, noteAccuracies, hitNotes, score);
+				new WinState(highestCombo, noteAccuracies, hitNotes, score, ratings);
 			});
 		}
 
@@ -154,6 +169,23 @@ class YunYunRhythmState extends SongState {
 
     override function update(elapsed) {
 
+		codeText.updateHitbox();
+
+		if (codeText.height > FlxG.height - 20)
+		{
+			codeText.text = "";
+		}
+
+		#if debug
+		if (FlxG.keys.justPressed.ENTER)
+		{
+			FlxG.switchState(() ->
+			{
+				new WinState(highestCombo, noteAccuracies, hitNotes, score, ratings);
+			});
+		}
+		#end
+        
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
 			openSubState(new PauseMenu());
@@ -222,6 +254,7 @@ class YunYunRhythmState extends SongState {
 			if (!note.hit && !note.missed && (note.time - FlxG.sound.music.time) < -hitLimit)
 			{
 				combo = 0;
+				health -= 5;
 				note.color = FlxColor.GRAY;
 				note.canHit = false;
 				note.missed = true;
@@ -230,6 +263,11 @@ class YunYunRhythmState extends SongState {
 
         manageHoldNotesState(elapsed);
 
+		if (health <= 0)
+		{
+			FlxG.switchState(LoseState.new);
+		}
+
         super.update(elapsed);
     }
 
@@ -237,11 +275,19 @@ class YunYunRhythmState extends SongState {
     var holdNotesStatus:Map<Note, String> = [];
 
     function holdNoteHit(note:Note) {
+		codeText.text += nextText + ' ';
+		codeIdx++;
+		nextText = theText[codeIdx];
+		FlxG.sound.play("assets/sounds/Key Press.mp3", .5);
         note.hit = true;
         note.noteGraphic.kill();
 		score += getNoteScore(note);
 		noteAccuracies += getHitAccuracy(note);
 		var rating = Rating.rate(Math.abs(FlxG.sound.music.time - note.time));
+		if (rating != "Bad" || rating != "Ok")
+		{
+			health += 10;
+		}
 		ratings[rating] += 1;
 		ratingText.text = rating;
 		var diff = note.time - FlxG.sound.music.time;
@@ -252,6 +298,8 @@ class YunYunRhythmState extends SongState {
         trace(holdNotes.contains(note));
 		combo++;
     }
+
+	var keyboardSound:FlxSound = new FlxSound();
 
     function manageHoldNotesState(elapsed:Float) {
 
@@ -295,13 +343,29 @@ class YunYunRhythmState extends SongState {
                     note.holdTime -= (elapsed*1000);
                     note.sustainSprite.setGraphicSize(note.sustainSprite.width, note.holdTime*noteSpeed);
                     note.sustainSprite.updateHitbox();
-					// if (note.time < FlxG.sound.music.time)
+					keyboardSound.play(false);
 					note.sustainSprite.y = hitY - note.sustainSprite.height;
+					codeTimer += elapsed;
+					if (codeTimer >= codeTime)
+					{
+						codeText.text += nextText + ' ';
+						codeIdx++;
+						nextText = theText[codeIdx];
+						codeTimer = 0;
+					}
                 }
 
-                if (!note.missed && note.hit && note.holdTime <= 0 && (oldStatus[note] == press(note) && (holdNotesStatus[note] == "pass" || holdNotesStatus[note] == press(note)))) {
+				if (!note.missed
+					&& note.hit
+					&& note.holdTime <= 0
+					&& (oldStatus[note] == press(note) && (holdNotesStatus[note] == "pass" || holdNotesStatus[note] == press(note))))
+				{
                     trace("WIN");
-					combo++;
+					if (keyboardSound.playing)
+					{
+						keyboardSound.stop();
+					}
+					health += 10;
                     note.kill();
                     if (note.sustainSprite != null)
                         note.sustainSprite.kill();
@@ -309,6 +373,11 @@ class YunYunRhythmState extends SongState {
                     return;
                 } else if (!note.missed && note.holdTime > 0 && holdNotesStatus[note]=="pass") {
                     trace("MISS LOL");
+					health -= 5;
+					if (keyboardSound.playing)
+					{
+						keyboardSound.stop();
+					}
                     note.missed=true;
                     note.kill();
                     note.sustainSprite.kill();
@@ -324,10 +393,14 @@ class YunYunRhythmState extends SongState {
     }
 
     function hitNote(note:Note) {
+		codeText.text += nextText + ' ';
+		codeIdx++;
+		nextText = theText[codeIdx];
         note.hit = true;
         note.kill();
         hitNotes++;
         score += getNoteScore(note);
+		FlxG.sound.play("assets/sounds/Key Press.mp3", .5);
         noteAccuracies += getHitAccuracy(note);
         var rating = Rating.rate(Math.abs(FlxG.sound.music.time - note.time));
         ratings[rating] += 1;

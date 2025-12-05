@@ -1,49 +1,40 @@
 package;
 
 import data.SongData.Song;
-import data.SongData.Song;
-import flixel.FlxG;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxSprite;
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.sound.FlxSound;
 import flixel.text.FlxText;
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
 import flixel.util.FlxColor;
 import haxe.Json;
-import haxe.Json;
-import moonchart.formats.Midi;
 import moonchart.formats.Midi;
 import moonchart.formats.Quaver;
-import moonchart.formats.Quaver;
-import moonchart.parsers.MidiParser;
 import moonchart.parsers.MidiParser;
 import moonchart.parsers.QuaverParser;
-import moonchart.parsers.QuaverParser;
 import openfl.Assets;
-import openfl.Assets;
-class MuseRhythmState extends SongState {
+
+class YunYunRhythmState extends SongState {
 
     var noteGroup:FlxTypedGroup<Note>;
     var sustainGroup:FlxTypedGroup<FlxSprite>;
 
-    var hitX:Float = FlxG.width / 6;
+    var hitY:Float = FlxG.height - FlxG.height / 4;
     var hitBar:FlxSprite;
     public static var noteSpeed:Float = 1;
 
     public static var song:Song;
 
     var hitLimit:Float = 210;
-    var noteCount:Int;
-    var score:Float;
-    var noteAccuracies:Float;
-    var hitNotes:Int;
+	var noteCount:Int = 0;
+	var score:Float = 0;
+	var noteAccuracies:Float = 0;
+	var hitNotes:Int = 0;
 
     var stepsInSong:Int = 0;
     var ratingText:FlxText;
+
+	var health:Float = 100;
 
     var notes:Array<{time:Float, column:Int, holdTime:Float}> = [];
 
@@ -57,28 +48,28 @@ class MuseRhythmState extends SongState {
         "Bad" => 0
     ];
     var dPressed:Bool;
-	var fPressed:Bool;
+    var fPressed:Bool;
 	var kPressed:Bool;
 	var jPressed:Bool;
-	var health:Float = 100;
 
     public function new(data:Song) {
         super();
         song = data;
         Conductor.bpm = song.bpm;
 		FlxG.sound.playMusic(data.songPath);
-		
         stepsInSong = Math.floor((FlxG.sound.music.length / 1000) / (60 / Conductor.bpm )) * 4;
         FlxG.watch.add(this, 'curStep', 'curStep');
         FlxG.watch.add(this, 'curBeat', 'curBeat');
         FlxG.watch.add(this, 'curMeasure', 'curMeasure');
 
 
-		var fuck = [
+        var fuck = [
+            "D4" => 3,
+            "D#4" => 2,
             "E4" => 1,
             "F4" => 0
         ];
-        var jsonShit = Json.parse(Assets.getText(song.notesPath));
+        var jsonShit = Json.parse(Assets.getText("assets/data/VisiPiano.json"));
         notes = [];
         for (i in 0...jsonShit.tracks.length) {
             var track = jsonShit.tracks[i];
@@ -125,15 +116,15 @@ class MuseRhythmState extends SongState {
 
     override function create() {
         noteGroup = new FlxTypedGroup<Note>();
-        hitBar = new FlxSprite(hitX, 0).makeGraphic(20, FlxG.height);
+		hitBar = new FlxSprite(0, hitY - 20).makeGraphic(FlxG.width, 20);
         add(hitBar);
-		keyboardSound.volume = .5;
-		keyboardSound.loadEmbedded("assets/sounds/Keyboard.mp3");
         sustainGroup = new FlxTypedGroup<FlxSprite>();
         add(sustainGroup);
-		add(noteGroup);
+        add(noteGroup);
+		keyboardSound.loadEmbedded("assets/sounds/Keyboard.mp3");
+		keyboardSound.volume = .35;
         for (note in notes) {
-            var n = noteGroup.add(new Note(note.time, note.column, 'muse', note.holdTime));
+            var n = noteGroup.add(new Note(note.time, note.column, note.holdTime));
             if (note.holdTime > 0) {
                 n.isSustain = true;
             }
@@ -158,26 +149,35 @@ class MuseRhythmState extends SongState {
 			});
 		}
 
+		FlxG.sound.music.looped = false;
 
         super.create();
     }
 
     override function update(elapsed) {
 
+		if (FlxG.keys.justPressed.ENTER)
+		{
+			FlxG.switchState(() ->
+			{
+				new WinState(highestCombo, noteAccuracies, hitNotes, score, ratings);
+			});
+		}
+
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
 			openSubState(new PauseMenu());
 		}
 
-		dPressed = fPressed = jPressed = kPressed = false;
+        dPressed = fPressed = jPressed = kPressed = false;
 
         noteGroup.forEachAlive((note) -> {
-            note.x = hitX - (FlxG.sound.music.time - note.time) * noteSpeed;
-			note.y = (FlxG.height / 4) + FlxG.height / 4 * (note.column);
+            note.y = hitY + (FlxG.sound.music.time - note.time) * noteSpeed;
+            note.x = (FlxG.width / 6) + FlxG.width/6*(note.column);
             if (!note.hit && note.isSustain) {
-                note.sustainSprite.y = note.y;
-                note.sustainSprite.color = note.color;
                 note.sustainSprite.x = note.x;
+                note.sustainSprite.color = note.color;
+				note.sustainSprite.y = (note.y + note.height) - note.sustainSprite.height;
             }
             
             if (!note.hit && Math.abs(FlxG.sound.music.time - note.time) < hitLimit) {
@@ -191,21 +191,20 @@ class MuseRhythmState extends SongState {
                     }
                     dPressed = true;
                 }
-				else if (FlxG.keys.justPressed.F && !fPressed)
-				{
-					if (canHitNote(note) && note.column == 0)
-					{
+                if (FlxG.keys.justPressed.F && !fPressed) {
+                    if (canHitNote(note) && note.column == 1) {
                         if (!note.isSustain) {
                             hitNote(note);
+                            // trace("BYE");
                         } else {
+                            // trace("HI AGAIN");
                             holdNoteHit(note);
                         }
                     }
-					fPressed = true;
+                    fPressed = true;
                 }
                 if (FlxG.keys.justPressed.J && !jPressed) {
-					if (canHitNote(note) && note.column == 1)
-					{
+                        if (canHitNote(note) && note.column == 2) {
                         if (!note.isSustain) {
                             hitNote(note);
                             // trace("BYE");
@@ -215,32 +214,29 @@ class MuseRhythmState extends SongState {
                         }
                     }
                     jPressed = true;
-				}
-				else if (FlxG.keys.justPressed.K && !kPressed)
-				{
-					if (canHitNote(note) && note.column == 1)
-					{
-						if (!note.isSustain)
-						{
-							hitNote(note);
-							// trace("BYE");
-						}
-						else
-						{
-							// trace("HI AGAIN");
-							holdNoteHit(note);
-						}
-					}
-					jPressed = true;
-				}
+                }
+                if (FlxG.keys.justPressed.K && !kPressed) {
+                    if (canHitNote(note) && note.column == 3) {
+                        if (!note.isSustain) {
+                            hitNote(note);
+                            // trace("BYE");
+                        } else {
+                            // trace("HI AGAIN");
+                            holdNoteHit(note);
+                        }
+                }
+                    kPressed = true;
+            }
         }
 
-        if (!note.hit && (note.time - FlxG.sound.music.time) < -hitLimit) {
-            note.color = FlxColor.GRAY;
-            note.canHit = false;
-            note.missed=true;
+			if (!note.hit && !note.missed && (note.time - FlxG.sound.music.time) < -hitLimit)
+			{
+				combo = 0;
 				health -= 5;
-        }
+				note.color = FlxColor.GRAY;
+				note.canHit = false;
+				note.missed = true;
+			}
     });
 
         manageHoldNotesState(elapsed);
@@ -250,7 +246,6 @@ class MuseRhythmState extends SongState {
 			FlxG.switchState(LoseState.new);
 		}
 
-
         super.update(elapsed);
     }
 
@@ -258,10 +253,9 @@ class MuseRhythmState extends SongState {
     var holdNotesStatus:Map<Note, String> = [];
 
     function holdNoteHit(note:Note) {
-		FlxG.sound.play("assets/sounds/Hit.mp3", .5);
+		FlxG.sound.play("assets/sounds/Key Press.mp3", .5);
         note.hit = true;
         note.noteGraphic.kill();
-        holdNotes.push(note);
 		score += getNoteScore(note);
 		noteAccuracies += getHitAccuracy(note);
 		var rating = Rating.rate(Math.abs(FlxG.sound.music.time - note.time));
@@ -269,11 +263,15 @@ class MuseRhythmState extends SongState {
 		{
 			health += 10;
 		}
+		ratings[rating] += 1;
+		ratingText.text = rating;
 		var diff = note.time - FlxG.sound.music.time;
 		note.holdTime += diff;
+        holdNotes.push(note);
         holdNotesStatus[note] = "press-"+note.column;
         trace(note, holdNotesStatus[note]);
         trace(holdNotes.contains(note));
+		combo++;
     }
 
 	var keyboardSound:FlxSound = new FlxSound();
@@ -286,19 +284,29 @@ class MuseRhythmState extends SongState {
             if (note.hit && note.alive && note.isSustain) {
                     switch (note.column) {
                         case 0:
-						if (FlxG.keys.pressed.D || FlxG.keys.pressed.F)
-						{
+                            if (FlxG.keys.pressed.D) {
                                 holdNotesStatus[note] = "press-0";
                             } else {
                                 holdNotesStatus[note] = "pass";
                             }
                         case 1:
-						if (FlxG.keys.pressed.J || FlxG.keys.pressed.K)
-						{
-							holdNotesStatus[note] = "press-1";
+                            if (FlxG.keys.pressed.F) {
+                                holdNotesStatus[note] = "press-1";
                             }else {
                                 holdNotesStatus[note] = "pass";
-						}
+                            }
+                        case 2:
+                            if (FlxG.keys.pressed.J) {
+                                holdNotesStatus[note] = "press-2";
+                            } else {
+                                holdNotesStatus[note] = "pass";
+                            }
+                        case 3:
+                            if (FlxG.keys.pressed.K) {
+                                holdNotesStatus[note] = "press-3";
+                            }else {
+                                holdNotesStatus[note] = "pass";
+                            }
                     }
 
                 function press(i:Note) {
@@ -308,13 +316,17 @@ class MuseRhythmState extends SongState {
 
                 if (holdNotesStatus[note] == press(note)) {
                     note.holdTime -= (elapsed*1000);
-                    note.sustainSprite.setGraphicSize(note.holdTime*noteSpeed, Note.NOTE_HEIGHT);
-					note.sustainSprite.updateHitbox();
-					note.sustainSprite.x = hitX; //- note.sustainSprite.heigh
+                    note.sustainSprite.setGraphicSize(note.sustainSprite.width, note.holdTime*noteSpeed);
+                    note.sustainSprite.updateHitbox();
 					keyboardSound.play(false);
+					note.sustainSprite.y = hitY - note.sustainSprite.height;
                 }
 
-                if (!note.missed && note.hit && note.holdTime <= 0 && (oldStatus[note] == press(note) && (holdNotesStatus[note] == "pass" || holdNotesStatus[note] == press(note)))) {
+				if (!note.missed
+					&& note.hit
+					&& note.holdTime <= 0
+					&& (oldStatus[note] == press(note) && (holdNotesStatus[note] == "pass" || holdNotesStatus[note] == press(note))))
+				{
                     trace("WIN");
 					if (keyboardSound.playing)
 					{
@@ -348,20 +360,16 @@ class MuseRhythmState extends SongState {
     }
 
     function hitNote(note:Note) {
-		FlxG.sound.play("assets/sounds/Hit.mp3", .5);
         note.hit = true;
         note.kill();
         hitNotes++;
         score += getNoteScore(note);
+		FlxG.sound.play("assets/sounds/Key Press.mp3", .5);
         noteAccuracies += getHitAccuracy(note);
         var rating = Rating.rate(Math.abs(FlxG.sound.music.time - note.time));
         ratings[rating] += 1;
-		if (rating != "Bad" || rating != "Ok")
-		{
-			health += 10;
-		}
         ratingText.text = rating;
-        
+		combo++;
     }
 
     function getNoteScore(note:Note) {
