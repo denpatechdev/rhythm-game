@@ -84,10 +84,27 @@ class PauseMenu extends FlxSubState {
                 new FlxTimer().start(1, _ -> {
                     close();
                     FlxG.switchState(PlayState.new);
-                });
+				});
+			}
+		}
+		super.update(elapsed);
+	}
 
-            }
-        }
-        super.update(elapsed);
+	function textEffect(textObj:FlxText, text)
+	{
+		for (i in 0...10)
+		{
+			new FlxTimer().start(i * .1, _ ->
+			{
+				if (i % 2 == 0)
+				{
+					textObj.text = text;
+				}
+				else
+				{
+					textObj.text = "> " + text;
+				}
+			});
+		}
     }
 }

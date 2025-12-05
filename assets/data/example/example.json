@@ -55,7 +55,7 @@
                 "name": "rhythm",
                 "args": [
                   "yunyun",
-                  "assets/data/song.json"
+                  "assets/data/herosim.json"
                 ]
               }
             },

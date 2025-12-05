@@ -51,7 +51,8 @@ class YunYunRhythmState extends SongState {
         "Great" => 0,
         "Good" => 0,
         "Ok" => 0,
-        "Bad" => 0
+		"Bad" => 0,
+		"Miss" => 0
     ];
     var dPressed:Bool;
     var fPressed:Bool;
@@ -62,7 +63,7 @@ class YunYunRhythmState extends SongState {
         super();
         song = data;
         Conductor.bpm = song.bpm;
-		FlxG.sound.playMusic(data.songPath);
+		FlxG.sound.playMusic(data.songPath, 1.0, false);
         stepsInSong = Math.floor((FlxG.sound.music.length / 1000) / (60 / Conductor.bpm )) * 4;
         FlxG.watch.add(this, 'curStep', 'curStep');
         FlxG.watch.add(this, 'curBeat', 'curBeat');
@@ -71,12 +72,9 @@ class YunYunRhythmState extends SongState {
 		theText = Assets.getText("assets/data/code.txt").split(' ');
 		nextText = theText[0];
         var fuck = [
-            "D4" => 3,
-            "D#4" => 2,
-            "E4" => 1,
-            "F4" => 0
+		"F4" => 3, "E4" => 2, "D4" => 1, "C4" => 0
         ];
-        var jsonShit = Json.parse(Assets.getText("assets/data/VisiPiano.json"));
+		var jsonShit = Json.parse(Assets.getText(song.notesPath));
         notes = [];
         for (i in 0...jsonShit.tracks.length) {
             var track = jsonShit.tracks[i];
@@ -84,19 +82,21 @@ class YunYunRhythmState extends SongState {
             for (j in 0...trackNotes.length) {
                 var note = trackNotes[j];
                 var column = fuck[note.name];
+				trace(note.name, column, 'mussolini');
                 var duration = note.duration * 1000;
                 var time = note.time * 1000;
-                if (duration < 250) {
+				if (duration <= 250)
+				{
                     notes.push({
                         time: time,
-                        column: column,
+						column: column,
                         holdTime: 0
                     });
                 } else {
                     notes.push({
                         time: time,
                         column: column,
-                        holdTime: duration
+						holdTime: duration
                     });
                 }
             }
@@ -127,8 +127,9 @@ class YunYunRhythmState extends SongState {
 
     override function create() {
 		codeText = new FlxText(20, 20, FlxG.width - 2, "", 16);  
+		codeText.color = FlxColor.LIME;
         noteGroup = new FlxTypedGroup<Note>();
-		hitBar = new FlxSprite(0, hitY - 20).makeGraphic(FlxG.width, 20);
+		hitBar = new FlxSprite(0, hitY).makeGraphic(FlxG.width, 20);
 		add(codeText);
         add(hitBar);
         sustainGroup = new FlxTypedGroup<FlxSprite>();
@@ -141,6 +142,7 @@ class YunYunRhythmState extends SongState {
             if (note.holdTime > 0) {
                 n.isSustain = true;
             }
+			n.hit = false;
         }
 		FlxG.mouse.useSystemCursor=true;
         noteCount = noteGroup.length;
@@ -156,10 +158,14 @@ class YunYunRhythmState extends SongState {
 
 		FlxG.sound.music.onComplete = () ->
 		{
-			FlxG.switchState(() ->
+			noteGroup.forEach((n) ->
 			{
-				new WinState(highestCombo, noteAccuracies, hitNotes, score, ratings);
+				if (n.missed)
+				{
+					ratings["Miss"] = ratings["Miss"] + 1;
+				}
 			});
+			FlxG.switchState(new WinState(highestCombo, noteAccuracies, hitNotes, score, ratings));
 		}
 
 		FlxG.sound.music.looped = false;
@@ -167,8 +173,11 @@ class YunYunRhythmState extends SongState {
         super.create();
     }
 
+	var evilMap:Map<Int, Int> = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
+
     override function update(elapsed) {
 
+		evilMap = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
 		codeText.updateHitbox();
 
 		if (codeText.height > FlxG.height - 20)
@@ -191,30 +200,37 @@ class YunYunRhythmState extends SongState {
 			openSubState(new PauseMenu());
 		}
 
-        dPressed = fPressed = jPressed = kPressed = false;
-
-        noteGroup.forEachAlive((note) -> {
+		for (note in noteGroup.members)
+		{
             note.y = hitY + (FlxG.sound.music.time - note.time) * noteSpeed;
             note.x = (FlxG.width / 6) + FlxG.width/6*(note.column);
-            if (!note.hit && note.isSustain) {
+			if (note.isSustain)
+			{
                 note.sustainSprite.x = note.x;
                 note.sustainSprite.color = note.color;
 				note.sustainSprite.y = (note.y + note.height) - note.sustainSprite.height;
             }
-            
-            if (!note.hit && Math.abs(FlxG.sound.music.time - note.time) < hitLimit) {
-                if (FlxG.keys.justPressed.D && !dPressed) {
-                    if (canHitNote(note) && note.column == 0) {
+
+			if (!note.hit && Math.abs(FlxG.sound.music.time - note.time) < hitLimit)
+			{
+				if (FlxG.keys.justPressed.J && !jPressed)
+				{
+					if (canHitNote(note) && note.column == 2 && evilMap[note.column] == 0)
+					{
                         if (!note.isSustain) {
                             hitNote(note);
+							// trace("BYE");
                         } else {
+							// trace("HI AGAIN");
                             holdNoteHit(note);
                         }
                     }
-                    dPressed = true;
+					// jPressed = true;
                 }
-                if (FlxG.keys.justPressed.F && !fPressed) {
-                    if (canHitNote(note) && note.column == 1) {
+				if (FlxG.keys.justPressed.K && !kPressed)
+				{
+					if (canHitNote(note) && note.column == 3 && evilMap[note.column] == 0)
+					{
                         if (!note.isSustain) {
                             hitNote(note);
                             // trace("BYE");
@@ -222,11 +238,27 @@ class YunYunRhythmState extends SongState {
                             // trace("HI AGAIN");
                             holdNoteHit(note);
                         }
+					}
+					// kPressed = true;
+				}
+				if (FlxG.keys.justPressed.D && !dPressed)
+				{
+					if (canHitNote(note) && note.column == 0 && evilMap[note.column] == 0)
+					{
+                        if (!note.isSustain) {
+							hitNote(note);
+						}
+						else
+						{
+                            holdNoteHit(note);
+                        }
                     }
-                    fPressed = true;
+					// dPressed = true;
                 }
-                if (FlxG.keys.justPressed.J && !jPressed) {
-                        if (canHitNote(note) && note.column == 2) {
+				if (FlxG.keys.justPressed.F && !fPressed)
+				{
+					if (canHitNote(note) && note.column == 1 && evilMap[note.column] == 0)
+					{
                         if (!note.isSustain) {
                             hitNote(note);
                             // trace("BYE");
@@ -234,22 +266,10 @@ class YunYunRhythmState extends SongState {
                             // trace("HI AGAIN");
                             holdNoteHit(note);
                         }
-                    }
-                    jPressed = true;
-                }
-                if (FlxG.keys.justPressed.K && !kPressed) {
-                    if (canHitNote(note) && note.column == 3) {
-                        if (!note.isSustain) {
-                            hitNote(note);
-                            // trace("BYE");
-                        } else {
-                            // trace("HI AGAIN");
-                            holdNoteHit(note);
-                        }
-                }
-                    kPressed = true;
-            }
-        }
+					}
+					// fPressed = true;
+				}
+			}
 
 			if (!note.hit && !note.missed && (note.time - FlxG.sound.music.time) < -hitLimit)
 			{
@@ -259,7 +279,7 @@ class YunYunRhythmState extends SongState {
 				note.canHit = false;
 				note.missed = true;
 			}
-    });
+		};
 
         manageHoldNotesState(elapsed);
 
@@ -267,6 +287,11 @@ class YunYunRhythmState extends SongState {
 		{
 			FlxG.switchState(LoseState.new);
 		}
+		dPressed = false;
+		fPressed = false;
+		jPressed = false;
+		kPressed = false;
+		// dPressed = fPressed = jPressed = kPressed = false;
 
         super.update(elapsed);
     }
@@ -275,6 +300,7 @@ class YunYunRhythmState extends SongState {
     var holdNotesStatus:Map<Note, String> = [];
 
     function holdNoteHit(note:Note) {
+		evilMap[note.column] += 1;
 		codeText.text += nextText + ' ';
 		codeIdx++;
 		nextText = theText[codeIdx];
@@ -304,8 +330,9 @@ class YunYunRhythmState extends SongState {
     function manageHoldNotesState(elapsed:Float) {
 
         var oldStatus:Map<Note, String> = holdNotesStatus.copy();
-
+		var notesToRemove = [];
         for (note in holdNotes) {
+			trace(note);
             if (note.hit && note.alive && note.isSustain) {
                     switch (note.column) {
                         case 0:
@@ -321,12 +348,14 @@ class YunYunRhythmState extends SongState {
                                 holdNotesStatus[note] = "pass";
                             }
                         case 2:
+						trace("LOL, J");
                             if (FlxG.keys.pressed.J) {
                                 holdNotesStatus[note] = "press-2";
                             } else {
                                 holdNotesStatus[note] = "pass";
                             }
                         case 3:
+						trace("LOL, K");
                             if (FlxG.keys.pressed.K) {
                                 holdNotesStatus[note] = "press-3";
                             }else {
@@ -369,8 +398,7 @@ class YunYunRhythmState extends SongState {
                     note.kill();
                     if (note.sustainSprite != null)
                         note.sustainSprite.kill();
-                    holdNotes.remove(note);
-                    return;
+					notesToRemove.push(note);
                 } else if (!note.missed && note.holdTime > 0 && holdNotesStatus[note]=="pass") {
                     trace("MISS LOL");
 					health -= 5;
@@ -381,11 +409,16 @@ class YunYunRhythmState extends SongState {
                     note.missed=true;
                     note.kill();
                     note.sustainSprite.kill();
-                    holdNotes.remove(note);
-                    return;
+					notesToRemove.push(note);
                 }
-            }
+			}
         }
+		for (i in notesToRemove)
+		{
+			holdNotes.remove(i);
+			holdNotesStatus.remove(i);
+		}
+        
     }
 
     function canHitNote(note:Note) {
@@ -393,6 +426,7 @@ class YunYunRhythmState extends SongState {
     }
 
     function hitNote(note:Note) {
+		evilMap[note.column] += 1;
 		codeText.text += nextText + ' ';
 		codeIdx++;
 		nextText = theText[codeIdx];

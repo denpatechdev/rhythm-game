@@ -15,7 +15,7 @@ class LoseState extends FlxState {
     override function create() {
         FlxG.sound.music.stop();
         FlxG.sound.play("assets/sounds/Failure.mp3");
-        add(new FlxText(20, 20, "You lost :(\nENTER for main menu screen"));
+		add(new FlxText(20, 20, "You lost :(\nENTER for main menu screen", 24));
         super.create();
     }
 

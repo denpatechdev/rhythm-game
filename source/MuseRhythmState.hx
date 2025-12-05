@@ -37,10 +37,10 @@ class MuseRhythmState extends SongState {
     public static var song:Song;
 
     var hitLimit:Float = 210;
-    var noteCount:Int;
-    var score:Float;
-    var noteAccuracies:Float;
-    var hitNotes:Int;
+	var noteCount:Int = 0;
+	var score:Float = 0;
+	var noteAccuracies:Float = 0;
+	var hitNotes:Int = 0;
 
     var stepsInSong:Int = 0;
     var ratingText:FlxText;
@@ -54,7 +54,8 @@ class MuseRhythmState extends SongState {
         "Great" => 0,
         "Good" => 0,
         "Ok" => 0,
-        "Bad" => 0
+		"Bad" => 0,
+		"Miss" => 0
     ];
     var dPressed:Bool;
 	var fPressed:Bool;
@@ -65,18 +66,11 @@ class MuseRhythmState extends SongState {
     public function new(data:Song) {
         super();
         song = data;
-        Conductor.bpm = song.bpm;
-		FlxG.sound.playMusic(data.songPath);
-		
-        stepsInSong = Math.floor((FlxG.sound.music.length / 1000) / (60 / Conductor.bpm )) * 4;
-        FlxG.watch.add(this, 'curStep', 'curStep');
-        FlxG.watch.add(this, 'curBeat', 'curBeat');
-        FlxG.watch.add(this, 'curMeasure', 'curMeasure');
+		Conductor.bpm = song.bpm;
 
 
 		var fuck = [
-            "E4" => 1,
-            "F4" => 0
+		"D4" => 1, "C4" => 0
         ];
         var jsonShit = Json.parse(Assets.getText(song.notesPath));
         notes = [];
@@ -124,6 +118,12 @@ class MuseRhythmState extends SongState {
     // }
 
     override function create() {
+		FlxG.sound.playMusic(song.songPath, 1.0, false);
+
+		stepsInSong = Math.floor((FlxG.sound.music.length / 1000) / (60 / Conductor.bpm)) * 4;
+		FlxG.watch.add(this, 'curStep', 'curStep');
+		FlxG.watch.add(this, 'curBeat', 'curBeat');
+		FlxG.watch.add(this, 'curMeasure', 'curMeasure');
         noteGroup = new FlxTypedGroup<Note>();
         hitBar = new FlxSprite(hitX, 0).makeGraphic(20, FlxG.height);
         add(hitBar);
@@ -150,19 +150,40 @@ class MuseRhythmState extends SongState {
             }
         });
 
+
 		FlxG.sound.music.onComplete = () ->
 		{
-			FlxG.switchState(() ->
+			noteGroup.forEach((n) ->
 			{
-				new WinState(highestCombo, noteAccuracies, hitNotes, score, ratings);
+				if (n.missed)
+				{
+					ratings["Miss"] = ratings["Miss"] + 1;
+				}
 			});
+			FlxG.switchState(new WinState(highestCombo, noteAccuracies, hitNotes, score, ratings));
 		}
 
 
         super.create();
     }
 
+	var evilMap:Map<Int, Int> = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
+
     override function update(elapsed) {
+
+		evilMap = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
+
+		if (FlxG.sound.music.time >= FlxG.sound.music.length)
+		{
+			noteGroup.forEach((n) ->
+			{
+				if (n.missed)
+				{
+					ratings["Miss"] = ratings["Miss"] + 1;
+				}
+			});
+			FlxG.switchState(new WinState(highestCombo, noteAccuracies, hitNotes, score, ratings));
+		}
 
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
@@ -181,7 +202,8 @@ class MuseRhythmState extends SongState {
             }
             
             if (!note.hit && Math.abs(FlxG.sound.music.time - note.time) < hitLimit) {
-                if (FlxG.keys.justPressed.D && !dPressed) {
+				if (FlxG.keys.justPressed.D && !dPressed && evilMap[note.column] == 0)
+				{
                     if (canHitNote(note) && note.column == 0) {
                         if (!note.isSustain) {
                             hitNote(note);
@@ -189,9 +211,9 @@ class MuseRhythmState extends SongState {
                             holdNoteHit(note);
                         }
                     }
-                    dPressed = true;
+					// dPressed = true;
                 }
-				else if (FlxG.keys.justPressed.F && !fPressed)
+				else if (FlxG.keys.justPressed.F && !fPressed && evilMap[note.column] == 0)
 				{
 					if (canHitNote(note) && note.column == 0)
 					{
@@ -201,9 +223,10 @@ class MuseRhythmState extends SongState {
                             holdNoteHit(note);
                         }
                     }
-					fPressed = true;
+					// fPressed = true;
                 }
-                if (FlxG.keys.justPressed.J && !jPressed) {
+				if (FlxG.keys.justPressed.J && !jPressed && evilMap[note.column] == 0)
+				{
 					if (canHitNote(note) && note.column == 1)
 					{
                         if (!note.isSustain) {
@@ -216,7 +239,7 @@ class MuseRhythmState extends SongState {
                     }
                     jPressed = true;
 				}
-				else if (FlxG.keys.justPressed.K && !kPressed)
+				else if (FlxG.keys.justPressed.K && !kPressed && evilMap[note.column] == 0)
 				{
 					if (canHitNote(note) && note.column == 1)
 					{
@@ -231,11 +254,12 @@ class MuseRhythmState extends SongState {
 							holdNoteHit(note);
 						}
 					}
-					jPressed = true;
+					kPressed = true;
 				}
         }
 
-        if (!note.hit && (note.time - FlxG.sound.music.time) < -hitLimit) {
+			if (!note.hit && !note.missed && (note.time - FlxG.sound.music.time) < -hitLimit)
+			{
             note.color = FlxColor.GRAY;
             note.canHit = false;
             note.missed=true;
@@ -244,6 +268,7 @@ class MuseRhythmState extends SongState {
     });
 
         manageHoldNotesState(elapsed);
+
 
 		if (health <= 0)
 		{
@@ -258,6 +283,7 @@ class MuseRhythmState extends SongState {
     var holdNotesStatus:Map<Note, String> = [];
 
     function holdNoteHit(note:Note) {
+		evilMap[note.column] += 1;
 		FlxG.sound.play("assets/sounds/Hit.mp3", .5);
         note.hit = true;
         note.noteGraphic.kill();
@@ -288,16 +314,20 @@ class MuseRhythmState extends SongState {
                         case 0:
 						if (FlxG.keys.pressed.D || FlxG.keys.pressed.F)
 						{
-                                holdNotesStatus[note] = "press-0";
-                            } else {
-                                holdNotesStatus[note] = "pass";
-                            }
+							holdNotesStatus[note] = "press-0";
+						}
+						else
+						{
+							holdNotesStatus[note] = "pass";
+						}
                         case 1:
 						if (FlxG.keys.pressed.J || FlxG.keys.pressed.K)
 						{
 							holdNotesStatus[note] = "press-1";
-                            }else {
-                                holdNotesStatus[note] = "pass";
+						}
+						else
+						{
+							holdNotesStatus[note] = "pass";
 						}
                     }
 
@@ -348,6 +378,7 @@ class MuseRhythmState extends SongState {
     }
 
     function hitNote(note:Note) {
+		evilMap[note.column] += 1;
 		FlxG.sound.play("assets/sounds/Hit.mp3", .5);
         note.hit = true;
         note.kill();
