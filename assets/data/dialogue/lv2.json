@@ -1,0 +1,782 @@
+{
+  "dialogue": [
+    {
+      "start": [
+        {
+          "name": "Florana",
+          "text": "I\u2019ve hacked the doors. Are you in?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Yeah! I\u2019m in!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "What do I do now? I see a lot of different code but\u2026it doesn\u2019t make sense to me?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "You don\u2019t need to do anything, I\u2019ll just umm\u2026do my part of the hackathon here and update you okay?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Hero files, villain files, music selection, level selection\u2026what did we hack into?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Welcome to the hero simulation.",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Ugh, hero stuff. Skip",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Here you can try your skills against-",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Glitch-2.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Skip",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Please select a-",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Glitch-3.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Skip",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "And if you want to-",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Glitch-4.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Skip",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Are you ready to begi-",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Glitch-1.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Skip",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "The doors close and the lights dim. An option menu appears",
+          "attrs": [],
+          "events": [],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Wait, what was that last part? Wait, wait why did the doors close?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Alternate options are available in the menu. As you have selected the \u2018lock in\u2019 mode, you will not be allowed to leave until you have complete the first level",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "WHAT!?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "What happened",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "I\u2019ve been locked in!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "How?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "I\u2026umm\u2026I may have skipped something important",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Well\u2026unskip it? Hold on, I\u2019ll try to hack it",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Doubtful.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Wait, there\u2019s options! If I try smash it maybe that\u2019ll fix things?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Excited.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Don\u2019t smash it! That never works!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Shock.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "Laeyna smashes the screen",
+          "attrs": [],
+          "events": [],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Too late! I smashed it",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Excited.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "You have selected-you have-you-selected-difficulty-difficulty increase-merging data\u2026error\u2026error",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Glitch-3.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Hey Flor\u2026",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Yeah?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "You may need to hack it afterall\u2026",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "About that\u2026",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "What?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Whatever you just did affected the programs on my screen. Things are glitching and it\u2019ll take me some time.",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Custom villain created, \u2018Techmate\u2019, multiple enemies combined, difficulty increased. Music set. Stage set. Begin",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Glitch-2.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "This looks like\u2026",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Looks like what?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Doubtful.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "One giant rhythm game! Where D & F corresponds to an air-hit and J & K for a ground-hit!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Villain-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "I can\u2019t believe I\u2019m in a rhythm game! Flo, is there anything you can do to get me out of here?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Villain-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "I\u2019m trying, but it\u2019ll take some time! I\u2019m kind of locked out too! What do you see?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Giant strange monsters heading my way!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Villain-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Do you\u2026think you can take them down?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "I don\u2019t think so\u2026I know so!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Villain-Determined.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Alright then, you just do what you\u2019ve gotta do and I\u2019ll find a way to hack you out!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Techmate",
+          "text": "Well well well, you\u2019ve reached the end!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Techmate-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Who are you supposed to be?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Villain-Angry.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Techmate",
+          "text": "I am\u2026",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Techmate-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Go on?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Villain-Angry.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Techmate",
+          "text": "Tech-Techno-Technoma-Techmate!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Techmate-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Techmate? What kind of name is that?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Villain-Angry.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Techmate",
+          "text": "You\u2019ve made it this far, but here\u2019s where it ends\u2026this is your Techmate!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Techmate-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Ohh right, like checkmate. Got it.",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Villain-Annoyed.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Techmate",
+          "text": "Clever, right?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Techmate-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Yeah no, you\u2019ll be the one that\u2019s going down!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Villain-Angry.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "Hi hi hi",
+          "attrs": [],
+          "events": [
+            {
+              "name": "rhythm",
+              "args": [
+                "muse",
+                "assets/data/song.json"
+              ]
+            }
+          ],
+          "choices": []
+        }
+      ]
+    }
+  ],
+  "branches": [
+    "start"
+  ]
+}

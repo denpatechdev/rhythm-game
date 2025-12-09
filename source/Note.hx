@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxColor;
@@ -15,8 +16,8 @@ class Note extends FlxSpriteGroup {
     public var noteGraphic:FlxSprite;
     public var sustainSprite:FlxSprite;
 
-    public static var NOTE_WIDTH:Int = 200;
-    public static var NOTE_HEIGHT:Int = 100;
+	public static var NOTE_WIDTH:Int = 200;
+	public static var NOTE_HEIGHT:Int = 100;
 	public var canHit:Bool = true; 
     public var isSustain:Bool = false;
 	public var missed:Bool;
@@ -30,32 +31,41 @@ class Note extends FlxSpriteGroup {
         fullHoldTime = HoldTime;
         holdTime = HoldTime;
 
-        noteGraphic = new FlxSprite().makeGraphic(NOTE_WIDTH, NOTE_HEIGHT);
+		if (Kind == 'yunyun')
+		{
+			noteGraphic = new FlxSprite().loadGraphic('assets/images/strum_note.png');
+		}
+		else
+		{
+			noteGraphic = new FlxSprite();
+			switch (column)
+			{
+				case 0:
+					var graphicPath = ('assets/images/' + FlxG.random.getObject(['Flyby', 'Technoswimmer', 'Vinylspiker']) + '.png');
+					// trace(graphicPath);
+					noteGraphic.loadGraphic('assets/images/' + FlxG.random.getObject(['Flyby', 'Technoswimmer', 'Vinylspiker']) + '.png', true, 535, 459);
+					noteGraphic.animation.add('idle', [0, 1, 2, 3, 4, 5, 6, 7], 24);
+					noteGraphic.animation.play('idle');
+				case 1:
+					var graphicPath = ('assets/images/' + FlxG.random.getObject(['Chadvibe', 'Technoskid']) + '.png');
+					// trace(graphicPath);
+					noteGraphic.loadGraphic('assets/images/' + FlxG.random.getObject(['Chadvibe', 'Technoskid']) + '.png', true, 535, 459);
+					noteGraphic.animation.add('idle', [0, 1, 2, 3, 4, 5, 6, 7], 24);
+					noteGraphic.animation.play('idle');
+			}
+		}
         if (holdTime != 0) {
             switch (kind) {
                 case 'yunyun':
-                    sustainSprite = new FlxSprite().makeGraphic(NOTE_WIDTH, Std.int(holdTime * YunYunRhythmState.noteSpeed));
+					sustainSprite = new FlxSprite().makeGraphic(Std.int(Note.NOTE_WIDTH - Note.NOTE_WIDTH / 2),
+						Std.int(holdTime * YunYunRhythmState.noteSpeed), FlxColor.LIME);
                 case 'muse':
-                    sustainSprite = new FlxSprite().makeGraphic(Std.int(holdTime * MuseRhythmState.noteSpeed), NOTE_HEIGHT);
-            }
+					sustainSprite = new FlxSprite().makeGraphic(Std.int(holdTime * MuseRhythmState.noteSpeed), Std.int(Note.NOTE_WIDTH - NOTE_WIDTH / 2));
+			}
             sustainSprite.alpha = .5;
             isSustain =true;
         }
-        add(noteGraphic);
-        switch (column) {
-            case 0:
-                color = FlxColor.PURPLE;
-            case 1:
-                color = FlxColor.BLUE;
-            case 2:
-                color = FlxColor.GREEN;
-            case 3:
-                color = FlxColor.RED;   
-        }
-
-        if (holdTime != 0) {
-            color = FlxColor.CYAN;
-        }
+		add(noteGraphic);
     }
 
     override function update(elapsed:Float) {

@@ -15,13 +15,13 @@ class PauseMenu extends FlxSubState {
     var bottomSpr:FlxSprite;
 
     var resumeText:FlxText;
+	var restartText:FlxText;
     var exitText:FlxText;
 
     public function new() {
         super();
         if (FlxG.sound.music != null)
-            FlxG.sound.music.pause();
-        FlxG.sound.play("assets/sounds/Pause.mp3");
+			FlxG.sound.music.pause();
     }
 
     override function create() {
@@ -40,14 +40,18 @@ class PauseMenu extends FlxSubState {
         add(rightSpr);
 
         resumeText = new FlxText(leftSpr.x + leftSpr.width + 20, topSpr.y + topSpr.height + 20, 0, "Resume", 32);
-        exitText = new FlxText(resumeText.x, resumeText.y + resumeText.height + 20, 0, "Exit to title screen", 32);
+		restartText = new FlxText(resumeText.x, resumeText.y + resumeText.height + 20, 0, "Restart", 32);
+		exitText = new FlxText(restartText.x, restartText.y + restartText.height + 20, 0, "Return to main menu", 32);
 
         add(resumeText);
+		add(restartText);
         add(exitText);
     }
 
     var idx:Int = 0;
-    var options = ["resume", "exit"];
+	var options = ["resume", "restart", "exit"];
+
+	var enterShit = false;
 
     override function update(elapsed:Float) {
 
@@ -59,16 +63,29 @@ class PauseMenu extends FlxSubState {
             FlxG.sound.play("assets/sounds/Select.mp3");
         }
 
+		if (!enterShit)
+		{
         if (options[idx] == "resume") {
             resumeText.text = "> Resume";
+				restartText.text = "Restart";
             exitText.text = "Exit to title screen";
         } else if (options[idx] == "exit") {
             exitText.text = "> Exit to title screen";
-            resumeText.text = "Resume";
-        }
+				restartText.text = "Restart";
+				resumeText.text = "Resume";
+			}
+			else if (options[idx] == "restart")
+			{
+				exitText.text = "Exit to title screen";
+				restartText.text = "> Restart";
+				resumeText.text = "Resume";
+			}
+		}
 
         if (FlxG.keys.justPressed.ENTER) {
+			enterShit = true;
             if (options[idx] == "resume") {
+				textEffect(resumeText, "Resume");
                 FlxG.sound.play("assets/sounds/Confirm.mp3", 1, false, null, true, () -> {
 
                 });
@@ -79,11 +96,22 @@ class PauseMenu extends FlxSubState {
                 });
 
             } else if (options[idx] == "exit") {
+				textEffect(exitText, "Exit to main menu");
+				FlxG.sound.play("assets/sounds/Confirm.mp3", 1, false, null, true, () -> {});
+				new FlxTimer().start(1, _ ->
+				{
+					close();
+					FlxG.switchState(MainMenu.new);
+				});
+			}
+			else if (options[idx] == "restart")
+			{
+				textEffect(restartText, "Restart");
                 FlxG.sound.play("assets/sounds/Confirm.mp3", 1, false, null, true, () -> {
                 });
                 new FlxTimer().start(1, _ -> {
                     close();
-                    FlxG.switchState(PlayState.new);
+					FlxG.resetState();
 				});
 			}
 		}
@@ -98,7 +126,7 @@ class PauseMenu extends FlxSubState {
 			{
 				if (i % 2 == 0)
 				{
-					textObj.text = text;
+					textObj.text = "  " + text;
 				}
 				else
 				{

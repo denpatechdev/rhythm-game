@@ -1,0 +1,331 @@
+{
+  "dialogue": [
+    {
+      "start": [
+        {
+          "name": "Florana",
+          "text": "I\u2019ve hacked it again! Get out of there before the doors shut again!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "System malfunction\u2026shutting doooooownn\u2026\u2026",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Glitch-4.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "...",
+          "attrs": [],
+          "events": [],
+          "choices": []
+        },
+        {
+          "name": "Tiffania",
+          "text": "So\u2026what did you two learn today",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Tiffania-Annoyed.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Not to hack into the hero\u2019s simulation room",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Not to blindly agree to hack without doing proper research first\u2026",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Tiffania",
+          "text": "Good.",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Tiffania-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "But the opportunity was too good to pass!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "And the challenge was really fun!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Speak for yourself! You played a nice rhythm game on your computer! I lived it! I almost got wiped out by Techmate!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Tiffania",
+          "text": "No buts! You\u2019re both back and safe now, so that\u2019s the main thing!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Tiffania-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "Techno music starts to play\u2026",
+          "attrs": [],
+          "events": [],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "No\u2026it followed us here?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Techmate",
+          "text": "Hello roommates!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Techmate-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Techmate!? But how!?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Relax girls, I was able to extract the Techmate character from the file and stick it onto my smart device! Now it\u2019s my personal techno generative assistant!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "You\u2019re\u2026kidding?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Techmate",
+          "text": "No hard feelings!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Techmate-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Sure\u2026as long as you won\u2019t try to kick my butt again!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Techmate",
+          "text": "Noted!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Techmate-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Tiffania",
+          "text": "Well, I\u2019m going to return to my studies. You two stay out of trouble!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Tiffania-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "You can count on me!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "No promises!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "THE END LOL!!!!!!!!!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "end",
+              "args": []
+            }
+          ],
+          "choices": []
+        }
+      ]
+    }
+  ],
+  "branches": [
+    "start"
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "dialogue": [
+    {
+      "start": [
+        {
+          "name": "Laeyna",
+          "text": "I\u2019ve done it-",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Excited.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Congratulations on beating the level!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Florana, have you managed to-",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "I\u2019m in! Just need to hack you out but I\u2019ve gained access! Give me precisely the length of one more techno song and you\u2019ll be out of there in no time!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Nice! I\u2019ll just wait around until the doors open!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Restarting the level now",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "You\u2019ve got to be kidding\u2026Flo, try to be quick, otherwise I\u2019ll have to fight Techmate again!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Who?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Doubtful.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Nevermind, just hurry!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "",
+          "attrs": [],
+          "events": [
+            {
+              "name": "rhythm",
+              "args": [
+                "yunyun",
+                "assets/data/last.json"
+              ]
+            }
+          ],
+          "choices": []
+        }
+      ]
+    }
+  ],
+  "branches": [
+    "start"
+  ]
+}

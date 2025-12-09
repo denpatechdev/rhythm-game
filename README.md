@@ -1,0 +1,1 @@
+# The worst rhythm game code to exist

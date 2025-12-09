@@ -1,392 +1,726 @@
 package;
 
-import data.SongData.Song;
 import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.sound.FlxSound;
+import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import haxe.Json;
-import moonchart.formats.Midi;
-import moonchart.formats.Quaver;
-import moonchart.parsers.MidiParser;
-import moonchart.parsers.QuaverParser;
 import openfl.Assets;
 
-class YunYunRhythmState extends SongState {
+class Credits extends FlxState {
+    public var creditsData:Array<Array<String>> = [];
+    public var text:FlxText;
 
-    var noteGroup:FlxTypedGroup<Note>;
-    var sustainGroup:FlxTypedGroup<FlxSprite>;
-
-    var hitY:Float = FlxG.height - FlxG.height / 4;
-    var hitBar:FlxSprite;
-    public static var noteSpeed:Float = 1;
-
-    public static var song:Song;
-
-    var hitLimit:Float = 210;
-	var noteCount:Int = 0;
-	var score:Float = 0;
-	var noteAccuracies:Float = 0;
-	var hitNotes:Int = 0;
-
-    var stepsInSong:Int = 0;
-    var ratingText:FlxText;
-
-	var health:Float = 100;
-
-    var notes:Array<{time:Float, column:Int, holdTime:Float}> = [];
-
-
-    public var ratings:Map<String, Int> = [
-        "Perfect" => 0,
-        "Marvelous" => 0,
-        "Great" => 0,
-        "Good" => 0,
-        "Ok" => 0,
-        "Bad" => 0
-    ];
-    var dPressed:Bool;
-    var fPressed:Bool;
-	var kPressed:Bool;
-	var jPressed:Bool;
-
-    public function new(data:Song) {
+    public function new() {
         super();
-        song = data;
-        Conductor.bpm = song.bpm;
-		FlxG.sound.playMusic(data.songPath);
-        stepsInSong = Math.floor((FlxG.sound.music.length / 1000) / (60 / Conductor.bpm )) * 4;
-        FlxG.watch.add(this, 'curStep', 'curStep');
-        FlxG.watch.add(this, 'curBeat', 'curBeat');
-        FlxG.watch.add(this, 'curMeasure', 'curMeasure');
-
-
-        var fuck = [
-            "D4" => 3,
-            "D#4" => 2,
-            "E4" => 1,
-            "F4" => 0
-        ];
-        var jsonShit = Json.parse(Assets.getText("assets/data/VisiPiano.json"));
-        notes = [];
-        for (i in 0...jsonShit.tracks.length) {
-            var track = jsonShit.tracks[i];
-            var trackNotes = track.notes;
-            for (j in 0...trackNotes.length) {
-                var note = trackNotes[j];
-                var column = fuck[note.name];
-                var duration = note.duration * 1000;
-                var time = note.time * 1000;
-                if (duration < 250) {
-                    notes.push({
-                        time: time,
-                        column: column,
-                        holdTime: 0
-                    });
-                } else {
-                    notes.push({
-                        time: time,
-                        column: column,
-                        holdTime: duration
-                    });
-                }
-            }
+        var asdf = Assets.getText("assets/data/credits.txt").split('\n');
+        for (a in asdf) {
+            creditsData.push(a.split(':'));
         }
     }
-    //     notes = [{
-    //         time: 1000,
-    //         holdTime: 1000,
-    //         column: 1
-    //     },{
-    //         time: 1000,
-    //         holdTime: 1000,
-    //         column: 0
-    //     },{
-    //         time: 1000,
-    //         holdTime: 1000,
-    //         column: 3
-    //     },{
-    //         time: 1000,
-    //         holdTime: 1000,
-    //         column: 2
-    //     }];
-    // }
 
     override function create() {
-        noteGroup = new FlxTypedGroup<Note>();
-		hitBar = new FlxSprite(0, hitY - 20).makeGraphic(FlxG.width, 20);
-        add(hitBar);
-        sustainGroup = new FlxTypedGroup<FlxSprite>();
-        add(sustainGroup);
-        add(noteGroup);
-		keyboardSound.loadEmbedded("assets/sounds/Keyboard.mp3");
-		keyboardSound.volume = .35;
-        for (note in notes) {
-            var n = noteGroup.add(new Note(note.time, note.column, note.holdTime));
-            if (note.holdTime > 0) {
-                n.isSustain = true;
-            }
-        }
-		FlxG.mouse.useSystemCursor=true;
-        noteCount = noteGroup.length;
-
-        ratingText = new FlxText(20, 20, 0, "", 32);
-        add(ratingText);
-
-        noteGroup.forEachAlive((note) -> {
-            if (note.isSustain) {
-                sustainGroup.add(note.sustainSprite);
-            }
-        });
-
-		FlxG.sound.music.onComplete = () ->
-		{
-			FlxG.switchState(() ->
-			{
-				new WinState(highestCombo, noteAccuracies, hitNotes, score, ratings);
-			});
-		}
-
-		FlxG.sound.music.looped = false;
-
         super.create();
-    }
-
-    override function update(elapsed) {
-
-		if (FlxG.keys.justPressed.ENTER)
-		{
-			FlxG.switchState(() ->
-			{
-				new WinState(highestCombo, noteAccuracies, hitNotes, score, ratings);
-			});
-		}
-
-		if (FlxG.keys.justPressed.ESCAPE)
-		{
-			openSubState(new PauseMenu());
-		}
-
-        dPressed = fPressed = jPressed = kPressed = false;
-
-        noteGroup.forEachAlive((note) -> {
-            note.y = hitY + (FlxG.sound.music.time - note.time) * noteSpeed;
-            note.x = (FlxG.width / 6) + FlxG.width/6*(note.column);
-            if (!note.hit && note.isSustain) {
-                note.sustainSprite.x = note.x;
-                note.sustainSprite.color = note.color;
-				note.sustainSprite.y = (note.y + note.height) - note.sustainSprite.height;
-            }
-            
-            if (!note.hit && Math.abs(FlxG.sound.music.time - note.time) < hitLimit) {
-                if (FlxG.keys.justPressed.D && !dPressed) {
-                    if (canHitNote(note) && note.column == 0) {
-                        if (!note.isSustain) {
-                            hitNote(note);
-                        } else {
-                            holdNoteHit(note);
-                        }
-                    }
-                    dPressed = true;
-                }
-                if (FlxG.keys.justPressed.F && !fPressed) {
-                    if (canHitNote(note) && note.column == 1) {
-                        if (!note.isSustain) {
-                            hitNote(note);
-                            // trace("BYE");
-                        } else {
-                            // trace("HI AGAIN");
-                            holdNoteHit(note);
-                        }
-                    }
-                    fPressed = true;
-                }
-                if (FlxG.keys.justPressed.J && !jPressed) {
-                        if (canHitNote(note) && note.column == 2) {
-                        if (!note.isSustain) {
-                            hitNote(note);
-                            // trace("BYE");
-                        } else {
-                            // trace("HI AGAIN");
-                            holdNoteHit(note);
-                        }
-                    }
-                    jPressed = true;
-                }
-                if (FlxG.keys.justPressed.K && !kPressed) {
-                    if (canHitNote(note) && note.column == 3) {
-                        if (!note.isSustain) {
-                            hitNote(note);
-                            // trace("BYE");
-                        } else {
-                            // trace("HI AGAIN");
-                            holdNoteHit(note);
-                        }
-                }
-                    kPressed = true;
-            }
+        text = new FlxText(20, 20, FlxG.width - 20, "", 32);
+        text.color = FlxColor.LIME;
+        for (data in creditsData) {
+            text.text += data[0] + " - " + data[1] + "\n"; 
         }
 
-			if (!note.hit && !note.missed && (note.time - FlxG.sound.music.time) < -hitLimit)
-			{
-				combo = 0;
-				health -= 5;
-				note.color = FlxColor.GRAY;
-				note.canHit = false;
-				note.missed = true;
-			}
-    });
+        add(text);
+    }
 
-        manageHoldNotesState(elapsed);
-
-		if (health <= 0)
-		{
-			FlxG.switchState(LoseState.new);
-		}
-
+    override function update(elapsed:Float) {
         super.update(elapsed);
-    }
-
-    var holdNotes:Array<Note> = [];
-    var holdNotesStatus:Map<Note, String> = [];
-
-    function holdNoteHit(note:Note) {
-		FlxG.sound.play("assets/sounds/Key Press.mp3", .5);
-        note.hit = true;
-        note.noteGraphic.kill();
-		score += getNoteScore(note);
-		noteAccuracies += getHitAccuracy(note);
-		var rating = Rating.rate(Math.abs(FlxG.sound.music.time - note.time));
-		if (rating != "Bad" || rating != "Ok")
-		{
-			health += 10;
-		}
-		ratings[rating] += 1;
-		ratingText.text = rating;
-		var diff = note.time - FlxG.sound.music.time;
-		note.holdTime += diff;
-        holdNotes.push(note);
-        holdNotesStatus[note] = "press-"+note.column;
-        trace(note, holdNotesStatus[note]);
-        trace(holdNotes.contains(note));
-		combo++;
-    }
-
-	var keyboardSound:FlxSound = new FlxSound();
-
-    function manageHoldNotesState(elapsed:Float) {
-
-        var oldStatus:Map<Note, String> = holdNotesStatus.copy();
-
-        for (note in holdNotes) {
-            if (note.hit && note.alive && note.isSustain) {
-                    switch (note.column) {
-                        case 0:
-                            if (FlxG.keys.pressed.D) {
-                                holdNotesStatus[note] = "press-0";
-                            } else {
-                                holdNotesStatus[note] = "pass";
-                            }
-                        case 1:
-                            if (FlxG.keys.pressed.F) {
-                                holdNotesStatus[note] = "press-1";
-                            }else {
-                                holdNotesStatus[note] = "pass";
-                            }
-                        case 2:
-                            if (FlxG.keys.pressed.J) {
-                                holdNotesStatus[note] = "press-2";
-                            } else {
-                                holdNotesStatus[note] = "pass";
-                            }
-                        case 3:
-                            if (FlxG.keys.pressed.K) {
-                                holdNotesStatus[note] = "press-3";
-                            }else {
-                                holdNotesStatus[note] = "pass";
-                            }
-                    }
-
-                function press(i:Note) {
-                    return "press-"+i.column;
-
-                }
-
-                if (holdNotesStatus[note] == press(note)) {
-                    note.holdTime -= (elapsed*1000);
-                    note.sustainSprite.setGraphicSize(note.sustainSprite.width, note.holdTime*noteSpeed);
-                    note.sustainSprite.updateHitbox();
-					keyboardSound.play(false);
-					note.sustainSprite.y = hitY - note.sustainSprite.height;
-                }
-
-				if (!note.missed
-					&& note.hit
-					&& note.holdTime <= 0
-					&& (oldStatus[note] == press(note) && (holdNotesStatus[note] == "pass" || holdNotesStatus[note] == press(note))))
-				{
-                    trace("WIN");
-					if (keyboardSound.playing)
-					{
-						keyboardSound.stop();
-					}
-					health += 10;
-                    note.kill();
-                    if (note.sustainSprite != null)
-                        note.sustainSprite.kill();
-                    holdNotes.remove(note);
-                    return;
-                } else if (!note.missed && note.holdTime > 0 && holdNotesStatus[note]=="pass") {
-                    trace("MISS LOL");
-					health -= 5;
-					if (keyboardSound.playing)
-					{
-						keyboardSound.stop();
-					}
-                    note.missed=true;
-                    note.kill();
-                    note.sustainSprite.kill();
-                    holdNotes.remove(note);
-                    return;
-                }
-            }
+        if (FlxG.keys.justPressed.ESCAPE) {
+            FlxG.switchState(MainMenu.new);
         }
     }
+}
+package;
 
-    function canHitNote(note:Note) {
-        return Math.abs(FlxG.sound.music.time - note.time) < hitLimit;
-    }
+import data.DialogueData;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.FlxState;
+import flixel.addons.effects.chainable.FlxOutlineEffect;
+import flixel.addons.text.FlxTypeText;
+import flixel.addons.ui.FlxButtonPlus;
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
+import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
+import haxe.Json;
+import openfl.Assets;
 
-    function hitNote(note:Note) {
-        note.hit = true;
-        note.kill();
-        hitNotes++;
-        score += getNoteScore(note);
-		FlxG.sound.play("assets/sounds/Key Press.mp3", .5);
-        noteAccuracies += getHitAccuracy(note);
-        var rating = Rating.rate(Math.abs(FlxG.sound.music.time - note.time));
-        ratings[rating] += 1;
-        ratingText.text = rating;
-		combo++;
-    }
+using StringTools;
+using StringTools;
 
-    function getNoteScore(note:Note) {
-        return Math.abs(note.time - hitLimit);
-    }
+class PlayState extends FlxState
+{
 
-    function getHitAccuracy(note:Note) {
-        return Math.abs(note.time - hitLimit) / hitLimit;
-    }
+	var startingBranch:String = "start";
+	var branches:Map<String, Array<DialogueBlock>> = [];
 
-    function getHitNotesRatio() {
-        return hitNotes / noteCount;
-    }
+	var curIdx:Int;
+	var curBranch:Array<DialogueBlock>;
+	var curBlock:DialogueBlock;
+	var curChoices:Array<Choice>;
 
-    function getTotalAccuracy() {
-        return noteAccuracies / (hitLimit * hitNotes);
-    }
+	var typingSpeedAttrName:String = "typing_speed";
+	var defaultTypingSpeed:Float = 0.016;
+
+	var events:Map<String, EventFunc> = [];
+	
+	var selectingChoices:Bool = false;
+	var typingDone:Bool = true;
+	
+	var bg:FlxSprite;
+	var sprites:FlxTypedGroup<FlxSprite>;
+	var spriteTags:Map<String, FlxSprite> = [];
+
+	var nameText:FlxText;
+	var dialogueText:FlxTypeText;
+	var defaultSpriteY:Float = 1000;
+
+	var choiceButtons:FlxTypedSpriteGroup<FlxButtonPlus>;
+
+	var characterTweens:Map<String, FlxTween> = [];
+
+	override public function create()
+	{
+		FlxG.mouse.useSystemCursor=true;
+		super.create();
+		branches = getBranches("assets/data/example/example.json");
+		curIdx = 0;
+		curBranch = branches[startingBranch];
+		curBlock = curBranch[curIdx];
+		curChoices = curBlock.choices;
+
+		bg = new FlxSprite().makeGraphic(1, 1, FlxColor.TRANSPARENT);
+		add(bg);
+
+		nameText = new FlxText(20, 20, 0, curBlock.name, 16);
+		dialogueText = new FlxTypeText(20, 60, 0, "", 16);
+
+		dialogueText.completeCallback = dialogueCompleteCallback;
+
+		choiceButtons = new FlxTypedSpriteGroup<FlxButtonPlus>(20, 100);
+
+		sprites = new FlxTypedGroup<FlxSprite>();
+		add(sprites);
+
+		add(nameText);
+		add(dialogueText);
+		add(choiceButtons);
+
+		// Data
+		
+		registerEvent('set_branch', setBranch);
+		registerEvent('set_file', placeholderFunc);
+
+		// Conditional
+
+		registerEvent('gt', placeholderFunc);
+		registerEvent('lt', placeholderFunc);
+		registerEvent('eq', placeholderFunc);
+		registerEvent('neq', placeholderFunc);
+		registerEvent('modcnd', placeholderFunc);
+
+		// Visual
+
+		registerEvent('set_bg', setBG);
+		registerEvent('add_char', placeholderFunc);
+		registerEvent('rm_char', placeholderFunc);
+		registerEvent('add_spr', addSpr);
+		registerEvent('rm_spr', rmSpr);
+		registerEvent('move', moveSpr);
+		registerEvent('move_smooth', placeholderFunc);
+
+		// Audio
+		registerEvent('set_bgm', setBGM);
+		registerEvent('set_bgm_vol', placeholderFunc);
+		registerEvent('pause_bgm', pauseBGM);
+		registerEvent('play_sound', placeholderFunc);
+
+		registerEvent('rhythm', (args, isChoice) -> {
+			Settings.songToPlay = args[1];
+			Settings.songType = args[0];
+			if (args[0] == 'yunyun')
+			{
+			FlxG.switchState(() -> {
+					return new YunYunRhythmState(Json.parse(Assets.getText(args[1])));
+				});
+			}
+			else
+			{
+				FlxG.switchState(() ->
+				{
+					return new MuseRhythmState(Json.parse(Assets.getText(args[1])));
+				});
+			}
+		});
+
+		runDialogue();
+	}
+
+	override public function update(elapsed:Float)
+	{
+		super.update(elapsed);
+
+		// if (FlxG.keys.justPressed.ESCAPE)
+		// {
+		// 	openSubState(new PauseMenu());
+		// }
+
+		if (FlxG.keys.justPressed.ENTER) {
+			progressDialogue();
+		}
+	}
+
+	function progressDialogue() {
+		if (!typingDone) {
+			skipDialogue();
+		} else if (!selectingChoices && typingDone && curIdx < curBranch.length - 1) {
+			curIdx++;
+			curBlock = curBranch[curIdx];
+			curChoices = curBlock.choices;
+			runDialogue();
+		}
+	}
+	
+	function skipDialogue() {
+		for (char in characterTweens.keys()) {
+			characterTweens[char].percent = 1;
+		}
+		dialogueText.skip();
+		typingDone = true;
+		showChoices();
+	}
+
+	function runDialogue() {
+		var typingSpeed:Float = defaultTypingSpeed;
+		for (attr in curBlock.attrs) {
+			if (attr.name == typingSpeedAttrName) {
+				typingSpeed = attr.value;
+			}
+		}
+		nameText.text = curBlock.name;
+		dialogueText.resetText(curBlock.text);
+		dialogueText.start(typingSpeed);
+
+		for (char in characterTweens.keys()) {
+			characterTweens[char].percent = 1;
+		}
+
+		for (event in curBlock.events) {
+			handleEvent(event, false);
+		}
+		typingDone = false;
+	}
+
+	function showChoices() {
+		if (curChoices.length == 0) {
+			return;
+		}
+
+		selectingChoices = true;
+
+		for (i in 0...curChoices.length) {
+			var choice = curChoices[i];
+
+			function onChoiceSelect() {
+				handleEvent(choice.event, true);
+				for (btn in choiceButtons.members) {
+					btn.kill();
+				}
+				choiceButtons.clear();
+				curChoices = [];
+				selectingChoices = false;
+			}
+
+			var btn = new FlxButtonPlus(i * 100, 0, onChoiceSelect, choice.text);
+			choiceButtons.add(btn);
+		}
+	}
+
+	function handleEvent(ev:DialogueEvent, ?isChoice:Bool = false) {
+		for (eventName in events.keys()) {
+			var func = events[eventName];
+			if (ev.name == eventName) {
+				func(ev.args, isChoice);
+			}
+		}
+	}
+
+	function dialogueCompleteCallback() {
+		typingDone = true;
+		showChoices();
+	}
+
+	inline function registerEvent(name:String, func:EventFunc) {
+		events.set(name, func);
+	}
+
+	function placeholderFunc(args:Array<Dynamic>, isChoice:Bool) {
+
+	}
+
+	function setBranch(args:Array<Dynamic>, isChoice:Bool) {
+		if (!isChoice) {
+			curIdx = -1;
+			curBranch = branches[args[0]];
+		} else {
+			curIdx = 0;
+			curBranch = branches[args[0]];
+			curBlock = curBranch[curIdx];
+			curChoices = curBlock.choices;
+			runDialogue();
+		}
+	}
+	
+	function setBG(args:Array<Dynamic>, isChoice:Bool) {
+		bg.loadGraphic(args[0]);
+	}
+
+	function addSpr(args:Array<Dynamic>, isChoice:Bool) {
+		var spr = new FlxSprite(0, defaultSpriteY).loadGraphic(args[0]);
+		spriteTags[args[1]] = spr;
+		spr.screenCenter();
+		if (args.length > 2) {
+			switch (args[2]) {
+				case 'left':
+					spr.x = 0;
+				case 'right':
+					spr.x = FlxG.width - spr.width;
+				case 'center':
+					spr.screenCenter(X);
+				default:
+					if (Std.isOfType(args[2], Float) || Std.isOfType(args[2], Int)) {
+						spr.x = args[2];
+					}
+			}
+		}
+		if (args.length > 3) {
+			trace('gjtkfldj kgfds', args[3]);
+			spr.y = args[3];
+		}
+		sprites.add(spr);
+	}
+
+	function rmSpr(args:Array<Dynamic>, isChoice:Bool) {
+		var spr = spriteTags[args[0]];
+		spr.kill();
+		spriteTags.remove(args[0]);
+	}
+
+	function moveSpr(args:Array<Dynamic>, isChoice:Bool) {
+		var spr = spriteTags[args[0]];
+		switch (args[1]) {
+			case 'left':
+				if (args.length > 3) {
+					characterTweens[args[0]] = FlxTween.tween(spr, {x: 0}, args[3]);
+				} else {
+					spr.x = 0;
+				}
+			case 'right':
+				if (args.length > 3) {
+					characterTweens[args[0]] = FlxTween.tween(spr, {x: FlxG.width - spr.width}, args[3]);
+				}
+				spr.x = FlxG.width - spr.width;
+			case 'center':
+				if (args.length > 3) {
+					characterTweens[args[0]] = FlxTween.tween(spr, {x: FlxG.width / 2 - spr.width}, args[3]);
+				} else {
+					spr.screenCenter(X);
+				}
+		}
+		if (args.length > 2) {
+			spr.y = args[2];
+		}
+	}
+
+	function setBGM(args:Array<Dynamic>, isChoice:Bool) {
+		FlxG.sound.playMusic(args[0]);
+	}
+
+	function pauseBGM(args:Array<Dynamic>, isChoice:Bool) {
+		FlxG.sound.music.pause();
+	}
+
+	function setBGMVol(args:Array<Dynamic>, isChoice:Bool) {	
+		if (args.length > 1) {
+			FlxTween.tween(FlxG.sound.music, {volume: args[0]}, args[1]);
+		} else {
+			FlxG.sound.music.volume = args[0];
+		}
+	}
+
+	function playSound(args:Array<Dynamic>, isChoice:Bool) {
+		FlxG.sound.play(args[0]);
+	}
+	
+	function getBranches(filename:String):Map<String, Array<DialogueBlock>> {
+		var ret:Map<String, Array<DialogueBlock>> = new Map<String, Array<DialogueBlock>>();
+		var obj = Json.parse(Assets.getText(filename));
+		var dialogue:Array<Dynamic> = obj.dialogue;
+		var branchesList:Array<String> = obj.branches;
+		trace(branchesList);
+
+		for (item in dialogue) {
+			for (branch in branchesList) {
+				if (Reflect.field(item, branch) != null) {
+					ret.set(branch, Reflect.field(item, branch));
+				}
+			}
+		}
+
+		return ret;
+	}
+}
+package;
+
+import data.DialogueData;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.FlxState;
+import flixel.addons.effects.chainable.FlxOutlineEffect;
+import flixel.addons.text.FlxTypeText;
+import flixel.addons.ui.FlxButtonPlus;
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
+import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
+import haxe.Json;
+import openfl.Assets;
+
+using StringTools;
+using StringTools;
+
+class PlayState extends FlxState
+{
+
+	var startingBranch:String = "start";
+	var branches:Map<String, Array<DialogueBlock>> = [];
+
+	var curIdx:Int;
+	var curBranch:Array<DialogueBlock>;
+	var curBlock:DialogueBlock;
+	var curChoices:Array<Choice>;
+
+	var typingSpeedAttrName:String = "typing_speed";
+	var defaultTypingSpeed:Float = 0.016;
+
+	var events:Map<String, EventFunc> = [];
+	
+	var selectingChoices:Bool = false;
+	var typingDone:Bool = true;
+	
+	var bg:FlxSprite;
+	var sprites:FlxTypedGroup<FlxSprite>;
+	var spriteTags:Map<String, FlxSprite> = [];
+
+	var nameText:FlxText;
+	var dialogueText:FlxTypeText;
+	var defaultSpriteY:Float = 1000;
+
+	var choiceButtons:FlxTypedSpriteGroup<FlxButtonPlus>;
+
+	var characterTweens:Map<String, FlxTween> = [];
+
+	override public function create()
+	{
+		FlxG.mouse.useSystemCursor=true;
+		super.create();
+		branches = getBranches("assets/data/example/example.json");
+		curIdx = 0;
+		curBranch = branches[startingBranch];
+		curBlock = curBranch[curIdx];
+		curChoices = curBlock.choices;
+
+		bg = new FlxSprite().makeGraphic(1, 1, FlxColor.TRANSPARENT);
+		add(bg);
+
+		nameText = new FlxText(20, 20, 0, curBlock.name, 16);
+		dialogueText = new FlxTypeText(20, 60, 0, "", 16);
+
+		dialogueText.completeCallback = dialogueCompleteCallback;
+
+		choiceButtons = new FlxTypedSpriteGroup<FlxButtonPlus>(20, 100);
+
+		sprites = new FlxTypedGroup<FlxSprite>();
+		add(sprites);
+
+		add(nameText);
+		add(dialogueText);
+		add(choiceButtons);
+
+		// Data
+		
+		registerEvent('set_branch', setBranch);
+		registerEvent('set_file', placeholderFunc);
+
+		// Conditional
+
+		registerEvent('gt', placeholderFunc);
+		registerEvent('lt', placeholderFunc);
+		registerEvent('eq', placeholderFunc);
+		registerEvent('neq', placeholderFunc);
+		registerEvent('modcnd', placeholderFunc);
+
+		// Visual
+
+		registerEvent('set_bg', setBG);
+		registerEvent('add_char', placeholderFunc);
+		registerEvent('rm_char', placeholderFunc);
+		registerEvent('add_spr', addSpr);
+		registerEvent('rm_spr', rmSpr);
+		registerEvent('move', moveSpr);
+		registerEvent('move_smooth', placeholderFunc);
+
+		// Audio
+		registerEvent('set_bgm', setBGM);
+		registerEvent('set_bgm_vol', placeholderFunc);
+		registerEvent('pause_bgm', pauseBGM);
+		registerEvent('play_sound', placeholderFunc);
+
+		registerEvent('rhythm', (args, isChoice) -> {
+			Settings.songToPlay = args[1];
+			Settings.songType = args[0];
+			if (args[0] == 'yunyun')
+			{
+			FlxG.switchState(() -> {
+					return new YunYunRhythmState(Json.parse(Assets.getText(args[1])));
+				});
+			}
+			else
+			{
+				FlxG.switchState(() ->
+				{
+					return new MuseRhythmState(Json.parse(Assets.getText(args[1])));
+				});
+			}
+		});
+
+		runDialogue();
+	}
+
+	override public function update(elapsed:Float)
+	{
+		super.update(elapsed);
+
+		// if (FlxG.keys.justPressed.ESCAPE)
+		// {
+		// 	openSubState(new PauseMenu());
+		// }
+
+		if (FlxG.keys.justPressed.ENTER) {
+			progressDialogue();
+		}
+	}
+
+	function progressDialogue() {
+		if (!typingDone) {
+			skipDialogue();
+		} else if (!selectingChoices && typingDone && curIdx < curBranch.length - 1) {
+			curIdx++;
+			curBlock = curBranch[curIdx];
+			curChoices = curBlock.choices;
+			runDialogue();
+		}
+	}
+	
+	function skipDialogue() {
+		for (char in characterTweens.keys()) {
+			characterTweens[char].percent = 1;
+		}
+		dialogueText.skip();
+		typingDone = true;
+		showChoices();
+	}
+
+	function runDialogue() {
+		var typingSpeed:Float = defaultTypingSpeed;
+		for (attr in curBlock.attrs) {
+			if (attr.name == typingSpeedAttrName) {
+				typingSpeed = attr.value;
+			}
+		}
+		nameText.text = curBlock.name;
+		dialogueText.resetText(curBlock.text);
+		dialogueText.start(typingSpeed);
+
+		for (char in characterTweens.keys()) {
+			characterTweens[char].percent = 1;
+		}
+
+		for (event in curBlock.events) {
+			handleEvent(event, false);
+		}
+		typingDone = false;
+	}
+
+	function showChoices() {
+		if (curChoices.length == 0) {
+			return;
+		}
+
+		selectingChoices = true;
+
+		for (i in 0...curChoices.length) {
+			var choice = curChoices[i];
+
+			function onChoiceSelect() {
+				handleEvent(choice.event, true);
+				for (btn in choiceButtons.members) {
+					btn.kill();
+				}
+				choiceButtons.clear();
+				curChoices = [];
+				selectingChoices = false;
+			}
+
+			var btn = new FlxButtonPlus(i * 100, 0, onChoiceSelect, choice.text);
+			choiceButtons.add(btn);
+		}
+	}
+
+	function handleEvent(ev:DialogueEvent, ?isChoice:Bool = false) {
+		for (eventName in events.keys()) {
+			var func = events[eventName];
+			if (ev.name == eventName) {
+				func(ev.args, isChoice);
+			}
+		}
+	}
+
+	function dialogueCompleteCallback() {
+		typingDone = true;
+		showChoices();
+	}
+
+	inline function registerEvent(name:String, func:EventFunc) {
+		events.set(name, func);
+	}
+
+	function placeholderFunc(args:Array<Dynamic>, isChoice:Bool) {
+
+	}
+
+	function setBranch(args:Array<Dynamic>, isChoice:Bool) {
+		if (!isChoice) {
+			curIdx = -1;
+			curBranch = branches[args[0]];
+		} else {
+			curIdx = 0;
+			curBranch = branches[args[0]];
+			curBlock = curBranch[curIdx];
+			curChoices = curBlock.choices;
+			runDialogue();
+		}
+	}
+	
+	function setBG(args:Array<Dynamic>, isChoice:Bool) {
+		bg.loadGraphic(args[0]);
+	}
+
+	function addSpr(args:Array<Dynamic>, isChoice:Bool) {
+		var spr = new FlxSprite(0, defaultSpriteY).loadGraphic(args[0]);
+		spriteTags[args[1]] = spr;
+		spr.screenCenter();
+		if (args.length > 2) {
+			switch (args[2]) {
+				case 'left':
+					spr.x = 0;
+				case 'right':
+					spr.x = FlxG.width - spr.width;
+				case 'center':
+					spr.screenCenter(X);
+				default:
+					if (Std.isOfType(args[2], Float) || Std.isOfType(args[2], Int)) {
+						spr.x = args[2];
+					}
+			}
+		}
+		if (args.length > 3) {
+			trace('gjtkfldj kgfds', args[3]);
+			spr.y = args[3];
+		}
+		sprites.add(spr);
+	}
+
+	function rmSpr(args:Array<Dynamic>, isChoice:Bool) {
+		var spr = spriteTags[args[0]];
+		spr.kill();
+		spriteTags.remove(args[0]);
+	}
+
+	function moveSpr(args:Array<Dynamic>, isChoice:Bool) {
+		var spr = spriteTags[args[0]];
+		switch (args[1]) {
+			case 'left':
+				if (args.length > 3) {
+					characterTweens[args[0]] = FlxTween.tween(spr, {x: 0}, args[3]);
+				} else {
+					spr.x = 0;
+				}
+			case 'right':
+				if (args.length > 3) {
+					characterTweens[args[0]] = FlxTween.tween(spr, {x: FlxG.width - spr.width}, args[3]);
+				}
+				spr.x = FlxG.width - spr.width;
+			case 'center':
+				if (args.length > 3) {
+					characterTweens[args[0]] = FlxTween.tween(spr, {x: FlxG.width / 2 - spr.width}, args[3]);
+				} else {
+					spr.screenCenter(X);
+				}
+		}
+		if (args.length > 2) {
+			spr.y = args[2];
+		}
+	}
+
+	function setBGM(args:Array<Dynamic>, isChoice:Bool) {
+		FlxG.sound.playMusic(args[0]);
+	}
+
+	function pauseBGM(args:Array<Dynamic>, isChoice:Bool) {
+		FlxG.sound.music.pause();
+	}
+
+	function setBGMVol(args:Array<Dynamic>, isChoice:Bool) {	
+		if (args.length > 1) {
+			FlxTween.tween(FlxG.sound.music, {volume: args[0]}, args[1]);
+		} else {
+			FlxG.sound.music.volume = args[0];
+		}
+	}
+
+	function playSound(args:Array<Dynamic>, isChoice:Bool) {
+		FlxG.sound.play(args[0]);
+	}
+	
+	function getBranches(filename:String):Map<String, Array<DialogueBlock>> {
+		var ret:Map<String, Array<DialogueBlock>> = new Map<String, Array<DialogueBlock>>();
+		var obj = Json.parse(Assets.getText(filename));
+		var dialogue:Array<Dynamic> = obj.dialogue;
+		var branchesList:Array<String> = obj.branches;
+		trace(branchesList);
+
+		for (item in dialogue) {
+			for (branch in branchesList) {
+				if (Reflect.field(item, branch) != null) {
+					ret.set(branch, Reflect.field(item, branch));
+				}
+			}
+		}
+
+		return ret;
+	}
 }
 package;
 
@@ -405,6 +739,7 @@ class PauseMenu extends FlxSubState {
     var bottomSpr:FlxSprite;
 
     var resumeText:FlxText;
+	var restartText:FlxText;
     var exitText:FlxText;
 
     public function new() {
@@ -430,14 +765,16 @@ class PauseMenu extends FlxSubState {
         add(rightSpr);
 
         resumeText = new FlxText(leftSpr.x + leftSpr.width + 20, topSpr.y + topSpr.height + 20, 0, "Resume", 32);
-        exitText = new FlxText(resumeText.x, resumeText.y + resumeText.height + 20, 0, "Exit to title screen", 32);
+		restartText = new FlxText(resumeText.x, resumeText.y + resumeText.height + 20, 0, "Restart", 32);
+		exitText = new FlxText(restartText.x, restartText.y + restartText.height + 20, 0, "Return to main menu", 32);
 
         add(resumeText);
+		add(restartText);
         add(exitText);
     }
 
     var idx:Int = 0;
-    var options = ["resume", "exit"];
+	var options = ["resume", "restart", "exit"];
 
     override function update(elapsed:Float) {
 
@@ -451,15 +788,23 @@ class PauseMenu extends FlxSubState {
 
         if (options[idx] == "resume") {
             resumeText.text = "> Resume";
+			restartText.text = "Restart";
             exitText.text = "Exit to title screen";
-            textEffect(resumeText, "Resume");
         } else if (options[idx] == "exit") {
             exitText.text = "> Exit to title screen";
+			restartText.text = "Restart";
+			resumeText.text = "Resume";
+		}
+		else if (options[idx] == "restart")
+		{
+			exitText.text = "Exit to title screen";
+			restartText.text = "Restart";
             resumeText.text = "Resume";
         }
 
         if (FlxG.keys.justPressed.ENTER) {
             if (options[idx] == "resume") {
+				textEffect(resumeText, "Resume");
                 FlxG.sound.play("assets/sounds/Confirm.mp3", 1, false, null, true, () -> {
 
                 });
@@ -470,11 +815,22 @@ class PauseMenu extends FlxSubState {
                 });
 
             } else if (options[idx] == "exit") {
+				textEffect(exitText, "Exit to main menu");
+				FlxG.sound.play("assets/sounds/Confirm.mp3", 1, false, null, true, () -> {});
+				new FlxTimer().start(1, _ ->
+				{
+					close();
+					FlxG.switchState(PlayState.new);
+				});
+			}
+			else if (options[idx] == "restart")
+			{
+				textEffect(restartText, "Restart");
                 FlxG.sound.play("assets/sounds/Confirm.mp3", 1, false, null, true, () -> {
                 });
                 new FlxTimer().start(1, _ -> {
                     close();
-                    FlxG.switchState(PlayState.new);
+					FlxG.resetState();
 				});
 			}
 		}
@@ -501,16 +857,10 @@ class PauseMenu extends FlxSubState {
 }
 package;
 
-import flixel.FlxGame;
-import haxe.ui.Toolkit;
-import openfl.display.Sprite;
+import flixel.FlxState;
 
-class Main extends Sprite
-{
-	public function new()
-	{
-		super();
-		addChild(new FlxGame(0, 0, PlayState));
-		Toolkit.init();
-	}
+class Conductor {
+    public static var bpm:Int = 147;
+    public static function getCrochet() { return (60 / bpm) * 1000; }
+    public static function getStepCrochet() { return getCrochet() / 4; }
 }

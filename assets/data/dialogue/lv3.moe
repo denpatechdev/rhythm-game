@@ -1,0 +1,12 @@
+///start
+Laeyna[set_spr,Laeyna-Excited.PNG]: I’ve done it-
+Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Congratulations on beating the level!
+Laeyna[set_spr,Laeyna-Idle.PNG]: Florana, have you managed to-
+Florana[set_spr,Florana-Idle.PNG]: I’m in! Just need to hack you out but I’ve gained access! Give me precisely the length of one more techno song and you’ll be out of there in no time!
+Laeyna[set_spr,Laeyna-Happy.png]: Nice! I’ll just wait around until the doors open!
+Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Restarting the level now
+Laeyna[set_spr,Laeyna-Idle.PNG]: You’ve got to be kidding…Flo, try to be quick, otherwise I’ll have to fight Techmate again!
+Florana[set_spr,Florana-Doubtful.PNG]: Who?
+Laeyna[set_spr,Laeyna-Idle.PNG]: Nevermind, just hurry!
+[rhythm, yunyun, assets/data/last.json]:
+///

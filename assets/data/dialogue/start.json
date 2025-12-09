@@ -1,0 +1,640 @@
+{
+  "dialogue": [
+    {
+      "start": [
+        {
+          "name": "",
+          "text": "Two girls are watching the TV. It's Laeyna and Tiffania",
+          "attrs": [],
+          "events": [],
+          "choices": []
+        },
+        {
+          "name": "Interviewer",
+          "text": "So I\u2019ve been told you\u2019re working on a super cool project!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Interviewer-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Mmhmm",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Interviewer",
+          "text": "Are you able to tell us anything about it?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Interviewer-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Of course! Otherwise I wouldn\u2019t be on interview, right? Haha",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Interviewer",
+          "text": "True true\u2026but you\u2019d still be here for me though, right?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Interviewer-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Umm\u2026is this part of the interview?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Interviewer",
+          "text": "Anyway\u2026What can you tell us about it?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Interviewer-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Well as you know, villains have been on the rise lately and a lot of people might need a place to learn self defense\u2026so, I\u2019ve created a hero-training-simulator!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Interviewer",
+          "text": "WOW! That\u2019s amazing!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Interviewer-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Yeah, it is pretty cool",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Interviewer",
+          "text": "So what does it do?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Interviewer-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Hero",
+          "text": "Well, without giving too much away, it uses data captured on my encounters with a couple villains and created augmented reality training courses to learn self defence and martial arts!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Hero-Sim-Room-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "Laeyna turns off the TV",
+          "attrs": [],
+          "events": [
+            {
+              "name": "clear_spr",
+              "args": []
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Tiffania",
+          "text": "Hey! Why\u2019d you turn it off, I was watching that!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Tiffania-Angry.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Didn\u2019t you hear? He\u2019s created a simulation room!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Excited.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Tiffania",
+          "text": "Yeah, that\u2019s kinda cool!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Tiffania-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "If I can get my hands on that code, I can make my own simulation!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Excited.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Tiffania",
+          "text": "And do what?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Tiffania-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Villainous deeds!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "TiffaniaTiffania",
+          "text": "Well, tough luck, you\u2019re no hacker girl",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Tiffania-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "Florana enters the room at that moment.",
+          "attrs": [],
+          "events": [],
+          "choices": []
+        },
+        {
+          "name": "FloranaTiffania",
+          "text": "Hey girls, what did I miss?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "Laeyna smirks at Tiffania.",
+          "attrs": [],
+          "events": [],
+          "choices": []
+        },
+        {
+          "name": "Tiffania",
+          "text": "Oh no\u2026",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Tiffania-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Hey Flo, you\u2019re a hacker, right?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Umm, I can be\u2026why?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "I need you to hack something for me\u2026for my umm\u2026project\u2026",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "What kind of project?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "It\u2019s a\u2026hackathon contest! Yeah! Whoever can hack it the fastest wins!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Sounds easy enough, how do I start?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "I\u2019ll hook us up with some radios for communication. Oh, and more extra thing",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Yeah, what\u2019s that?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Doubtful.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "The thing you\u2019re hacking into is a large room for me to break into",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "\u2026What?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Shock.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Just trust me, it\u2019s too much to explain",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Happy.png"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Tiffania, are you taking part in this hackathon?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "Laeyna gives Tiffania a look to say \u2018shh not a word\u2019",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Tiffania",
+          "text": "Nope. I\u2019m not taking part in anything. I have better things to do",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Tiffania-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "...",
+          "attrs": [],
+          "events": [],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Wow, this code\u2026it\u2019s kinda intense\u2026",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Shock.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Is it? Umm\u2026you\u2019ve got this though, right?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "Yeah but\u2026it\u2019ll take me some time!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "Try to be quick though, I\u2019m waiting outside the building now!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Idle.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Florana",
+          "text": "What type of hackathon has you literally hack into a building?",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Florana-Doubtful.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "Laeyna",
+          "text": "One with a very good prize!",
+          "attrs": [],
+          "events": [
+            {
+              "name": "set_spr",
+              "args": [
+                "Laeyna-Excited.PNG"
+              ]
+            }
+          ],
+          "choices": []
+        },
+        {
+          "name": "",
+          "text": "hi lolololol",
+          "attrs": [],
+          "events": [
+            {
+              "name": "rhythm",
+              "args": [
+                "yunyun",
+                "assets/data/herosim.json"
+              ]
+            }
+          ],
+          "choices": []
+        }
+      ]
+    }
+  ],
+  "branches": [
+    "start"
+  ]
+}

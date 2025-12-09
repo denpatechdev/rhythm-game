@@ -46,7 +46,7 @@ class SongState extends FlxState {
     function onStep(step:Int) {
         if (step % 4 == 0) {
             curBeat++;
-            onBeat(Math.floor(step / 4));
+			onBeat(curBeat);
         }
     }
 

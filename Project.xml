@@ -45,7 +45,7 @@
 
 	<!-- <haxelib name="haxeui" /> -->
 
-	<haxelib name="moonchart"/>
+	<!-- <haxelib name="moonchart"/> -->
 
 	<haxelib name="haxeui-flixel"/>
 

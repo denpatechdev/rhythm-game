@@ -13,6 +13,7 @@ import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 import haxe.Json;
 import openfl.Assets;
 
@@ -54,17 +55,25 @@ class PlayState extends FlxState
 	{
 		FlxG.mouse.useSystemCursor=true;
 		super.create();
-		branches = getBranches("assets/data/example/example.json");
+		if (Settings.songToPlay == null && Settings.goToVnPart == null && Settings.songType == null)
+		{
+			branches = getBranches("assets/data/dialogue/start.json");
+		}
+		else if (Settings.goToVnPart != null)
+		{
+			branches = getBranches(Settings.goToVnPart);
+		}
 		curIdx = 0;
 		curBranch = branches[startingBranch];
 		curBlock = curBranch[curIdx];
 		curChoices = curBlock.choices;
 
-		bg = new FlxSprite().makeGraphic(1, 1, FlxColor.TRANSPARENT);
+		bg = new FlxSprite().loadGraphic('assets/images/no-bg.png');
+		FlxG.sound.playMusic('assets/music/ReliefSongbpm70.ogg');
 		add(bg);
 
-		nameText = new FlxText(20, 20, 0, curBlock.name, 16);
-		dialogueText = new FlxTypeText(20, 60, 0, "", 16);
+		dialogueText = new FlxTypeText(20, FlxG.height - FlxG.height / 4, FlxG.width - 20, "", 32);
+		nameText = new FlxText(20, dialogueText.y - 40, 0, curBlock.name, 24);
 
 		dialogueText.completeCallback = dialogueCompleteCallback;
 
@@ -73,6 +82,12 @@ class PlayState extends FlxState
 		sprites = new FlxTypedGroup<FlxSprite>();
 		add(sprites);
 
+		var overlayThing = new FlxSprite(0, nameText.y - 40).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		overlayThing.alpha = .7;
+		add(overlayThing);
+
+
+		
 		add(nameText);
 		add(dialogueText);
 		add(choiceButtons);
@@ -89,6 +104,10 @@ class PlayState extends FlxState
 		registerEvent('eq', placeholderFunc);
 		registerEvent('neq', placeholderFunc);
 		registerEvent('modcnd', placeholderFunc);
+		registerEvent('end', (a, b) ->
+		{
+			FlxG.switchState(MainMenu.new);
+		});
 
 		// Visual
 
@@ -97,6 +116,7 @@ class PlayState extends FlxState
 		registerEvent('rm_char', placeholderFunc);
 		registerEvent('add_spr', addSpr);
 		registerEvent('rm_spr', rmSpr);
+		registerEvent('set_spr', setSpr);
 		registerEvent('move', moveSpr);
 		registerEvent('move_smooth', placeholderFunc);
 
@@ -107,6 +127,11 @@ class PlayState extends FlxState
 		registerEvent('play_sound', placeholderFunc);
 
 		registerEvent('rhythm', (args, isChoice) -> {
+			Settings.songToPlay = args[1];
+			Settings.songType = args[0];
+			Settings.goToVnPart = null;
+			FlxG.sound.music.stop();
+			trace('LOL MUSIC', args);
 			if (args[0] == 'yunyun')
 			{
 			FlxG.switchState(() -> {
@@ -121,6 +146,8 @@ class PlayState extends FlxState
 				});
 			}
 		});
+
+		// handleEvent(curBranch[curBranch.length - 1].events[0], false);
 
 		runDialogue();
 	}
@@ -146,6 +173,16 @@ class PlayState extends FlxState
 			curIdx++;
 			curBlock = curBranch[curIdx];
 			curChoices = curBlock.choices;
+			for (s in spritesToClear)
+			{
+				if (sprites.members.contains(s))
+				{
+					sprites.remove(s);
+					s.kill();
+					s.destroy();
+				}
+			}
+			spritesToClear = [];
 			runDialogue();
 		}
 	}
@@ -242,6 +279,17 @@ class PlayState extends FlxState
 	
 	function setBG(args:Array<Dynamic>, isChoice:Bool) {
 		bg.loadGraphic(args[0]);
+	}
+
+	var spritesToClear:Array<FlxSprite> = [];
+
+	function setSpr(args:Array<Dynamic>, isChoice:Bool)
+	{
+		var spr:FlxSprite = new FlxSprite().loadGraphic('assets/images/' + args[0]);
+		spr.setGraphicSize(FlxG.width, FlxG.height);
+		spr.updateHitbox();
+		sprites.add(spr);
+		spritesToClear.push(spr);
 	}
 
 	function addSpr(args:Array<Dynamic>, isChoice:Bool) {

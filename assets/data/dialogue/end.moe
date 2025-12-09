@@ -1,0 +1,26 @@
+///start
+Florana[set_spr,Florana-Idle.PNG]: I’ve hacked it again! Get out of there before the doors shut again!
+Hero[set_spr,Hero-Sim-Room-Glitch-4.PNG]: System malfunction…shutting doooooownn……
+:...
+Tiffania[set_spr,Tiffania-Annoyed.PNG]: So…what did you two learn today
+Laeyna[set_spr,Laeyna-Idle.PNG]: Not to hack into the hero’s simulation room
+Florana[set_spr,Florana-Idle.PNG]: Not to blindly agree to hack without doing proper research first…
+Tiffania[set_spr,Tiffania-Idle.PNG]: Good. 
+Laeyna[set_spr,Laeyna-Happy.png]: But the opportunity was too good to pass!
+Florana[set_spr,Florana-Idle.PNG]: And the challenge was really fun!
+Laeyna[set_spr,Laeyna-Idle.PNG]: Speak for yourself! You played a nice rhythm game on your computer! I lived it! I almost got wiped out by Techmate!
+Tiffania[set_spr,Tiffania-Idle.PNG]: No buts! You’re both back and safe now, so that’s the main thing!
+:Techno music starts to play…
+Laeyna[set_spr,Laeyna-Idle.PNG]: No…it followed us here? 
+Techmate[set_spr,Techmate-Idle.PNG]: Hello roommates!
+Laeyna[set_spr,Laeyna-Idle.PNG]: Techmate!? But how!?
+Florana[set_spr,Florana-Idle.PNG]: Relax girls, I was able to extract the Techmate character from the file and stick it onto my smart device! Now it’s my personal techno generative assistant!
+Laeyna[set_spr,Laeyna-Idle.PNG]: You’re…kidding?
+Techmate[set_spr,Techmate-Idle.PNG]: No hard feelings! 
+Laeyna[set_spr,Laeyna-Idle.PNG]: Sure…as long as you won’t try to kick my butt again!
+Techmate[set_spr,Techmate-Idle.PNG]: Noted!
+Tiffania[set_spr,Tiffania-Idle.PNG]: Well, I’m going to return to my studies. You two stay out of trouble!
+Florana[set_spr,Florana-Idle.PNG]: You can count on me!
+Laeyna[set_spr,Laeyna-Happy.png]: No promises!
+[end]:THE END LOL!!!!!!!!!
+///

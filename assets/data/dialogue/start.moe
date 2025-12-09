@@ -1,0 +1,49 @@
+///start
+: Two girls are watching the TV. It's Laeyna and Tiffania
+Interviewer[set_spr,Interviewer-Idle.PNG]: So I’ve been told you’re working on a super cool project!
+Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Mmhmm
+Interviewer[set_spr,Interviewer-Idle.PNG]: Are you able to tell us anything about it?
+Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Of course! Otherwise I wouldn’t be on interview, right? Haha
+Interviewer[set_spr,Interviewer-Idle.PNG]: True true…but you’d still be here for me though, right?
+Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Umm…is this part of the interview?
+Interviewer[set_spr,Interviewer-Idle.PNG]: Anyway…What can you tell us about it?
+Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Well as you know, villains have been on the rise lately and a lot of people might need a place to learn self defense…so, I’ve created a hero-training-simulator!
+Interviewer[set_spr,Interviewer-Idle.PNG]: WOW! That’s amazing!
+Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Yeah, it is pretty cool
+Interviewer[set_spr,Interviewer-Idle.PNG]: So what does it do?
+Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Well, without giving too much away, it uses data captured on my encounters with a couple villains and created augmented reality training courses to learn self defence and martial arts!
+[clear_spr]: Laeyna turns off the TV
+Tiffania[set_spr,Tiffania-Angry.PNG]: Hey! Why’d you turn it off, I was watching that!
+Laeyna[set_spr,Laeyna-Excited.PNG]: Didn’t you hear? He’s created a simulation room!
+Tiffania[set_spr,Tiffania-Idle.PNG]: Yeah, that’s kinda cool!
+Laeyna[set_spr,Laeyna-Excited.PNG]: If I can get my hands on that code, I can make my own simulation!
+Tiffania[set_spr,Tiffania-Idle.PNG]: And do what?
+Laeyna[set_spr,Laeyna-Happy.png]: Villainous deeds!
+TiffaniaTiffania[set_spr,Tiffania-Idle.PNG]: Well, tough luck, you’re no hacker girl
+: Florana enters the room at that moment.
+FloranaTiffania[set_spr,Florana-Idle.PNG]: Hey girls, what did I miss?
+: Laeyna smirks at Tiffania.
+Tiffania[set_spr,Tiffania-Idle.PNG]: Oh no…
+Laeyna[set_spr,Laeyna-Happy.png]: Hey Flo, you’re a hacker, right?
+Florana[set_spr,Florana-Idle.PNG]: Umm, I can be…why?
+Laeyna[set_spr,Laeyna-Happy.png]: I need you to hack something for me…for my umm…project…
+Florana[set_spr,Florana-Idle.PNG]: What kind of project?
+Laeyna[set_spr,Laeyna-Happy.png]: It’s a…hackathon contest! Yeah! Whoever can hack it the fastest wins!
+Florana[set_spr,Florana-Idle.PNG]: Sounds easy enough, how do I start?
+Laeyna[set_spr,Laeyna-Happy.png]: I’ll hook us up with some radios for communication. Oh, and more extra thing
+Florana[set_spr,Florana-Doubtful.PNG]: Yeah, what’s that?
+Laeyna[set_spr,Laeyna-Idle.PNG]: The thing you’re hacking into is a large room for me to break into
+Florana[set_spr,Florana-Shock.PNG]: …What?
+Laeyna[set_spr,Laeyna-Happy.png]: Just trust me, it’s too much to explain
+Florana[set_spr,Florana-Idle.PNG]: Tiffania, are you taking part in this hackathon?
+[set_spr,Laeyna-Idle.PNG]: Laeyna gives Tiffania a look to say ‘shh not a word’
+Tiffania[set_spr,Tiffania-Idle.PNG]: Nope. I’m not taking part in anything. I have better things to do
+:...
+Florana[set_spr,Florana-Shock.PNG]: Wow, this code…it’s kinda intense… 
+Laeyna[set_spr,Laeyna-Idle.PNG]: Is it? Umm…you’ve got this though, right?
+Florana[set_spr,Florana-Idle.PNG]: Yeah but…it’ll take me some time!
+Laeyna[set_spr,Laeyna-Idle.PNG]: Try to be quick though, I’m waiting outside the building now!
+Florana[set_spr,Florana-Doubtful.PNG]: What type of hackathon has you literally hack into a building?
+Laeyna[set_spr,Laeyna-Excited.PNG]: One with a very good prize!
+[rhythm, yunyun, assets/data/herosim.json]:hi lolololol
+///
