@@ -12,6 +12,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -25,6 +31,12 @@
               "name": "set_spr",
               "args": [
                 "Laeyna-Happy.png"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -40,6 +52,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -53,6 +71,12 @@
               "name": "set_spr",
               "args": [
                 "Laeyna-Happy.png"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -81,6 +105,12 @@
               "name": "set_spr",
               "args": [
                 "Hero-Sim-Room-Idle.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -271,6 +301,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -284,6 +320,12 @@
               "name": "set_spr",
               "args": [
                 "Laeyna-Idle.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -299,6 +341,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -312,6 +360,12 @@
               "name": "set_spr",
               "args": [
                 "Laeyna-Idle.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -327,6 +381,12 @@
               "args": [
                 "Florana-Doubtful.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -340,6 +400,12 @@
               "name": "set_spr",
               "args": [
                 "Laeyna-Excited.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -355,6 +421,12 @@
               "args": [
                 "Florana-Shock.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -363,7 +435,14 @@
           "name": "",
           "text": "Laeyna smashes the screen",
           "attrs": [],
-          "events": [],
+          "events": [
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
+              ]
+            }
+          ],
           "choices": []
         },
         {
@@ -418,6 +497,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -431,6 +516,12 @@
               "name": "set_spr",
               "args": [
                 "Laeyna-Idle.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -446,6 +537,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -459,6 +556,12 @@
               "name": "set_spr",
               "args": [
                 "Laeyna-Idle.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -474,6 +577,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -487,6 +596,12 @@
               "name": "set_spr",
               "args": [
                 "Hero-Sim-Room-Glitch-2.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -516,6 +631,12 @@
               "args": [
                 "Florana-Doubtful.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -529,6 +650,12 @@
               "name": "set_spr",
               "args": [
                 "Villain-Idle.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -558,6 +685,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -571,6 +704,12 @@
               "name": "set_spr",
               "args": [
                 "Villain-Idle.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -586,6 +725,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -599,6 +744,12 @@
               "name": "set_spr",
               "args": [
                 "Villain-Determined.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],
@@ -614,6 +765,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -627,6 +784,12 @@
               "name": "set_spr",
               "args": [
                 "Techmate-Idle.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
               ]
             }
           ],

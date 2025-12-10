@@ -1,10 +1,10 @@
 ///start
-Florana[set_spr,Florana-Idle.PNG]: I’ve hacked the doors. Are you in?
-Laeyna[set_spr,Laeyna-Happy.png]: Yeah! I’m in!
-Florana[set_spr,Florana-Idle.PNG]: What do I do now? I see a lot of different code but…it doesn’t make sense to me?
-Laeyna[set_spr,Laeyna-Happy.png]: You don’t need to do anything, I’ll just umm…do my part of the hackathon here and update you okay?
-Florana[set_spr,Laeyna-Idle.PNG]: Hero files, villain files, music selection, level selection…what did we hack into?
-Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Welcome to the hero simulation.
+Florana[set_spr,Florana-Idle.PNG;set_spr,06 - Hacker_s bedroom]: I’ve hacked the doors. Are you in?
+Laeyna[set_spr,Laeyna-Happy.png;set_bg,07 - Inside Simulation Room]: Yeah! I’m in!
+Florana[set_spr,Florana-Idle.PNG;set_spr,06 - Hacker_s bedroom]: What do I do now? I see a lot of different code but…it doesn’t make sense to me?
+Laeyna[set_spr,Laeyna-Happy.png;set_bg,07 - Inside Simulation Room]: You don’t need to do anything, I’ll just umm…do my part of the hackathon here and update you okay?
+Florana[set_spr,Laeyna-Idle.PNG;set_spr,06 - Hacker_s bedroom]: Hero files, villain files, music selection, level selection…what did we hack into?
+Hero[set_spr,Hero-Sim-Room-Idle.PNG;set_bg,07 - Inside Simulation Room]: Welcome to the hero simulation.
 Laeyna[set_spr,Laeyna-Idle.PNG]: Ugh, hero stuff. Skip
 Hero[set_spr,Hero-Sim-Room-Glitch-2.PNG]:  Here you can try your skills against-
 Laeyna[set_spr,Laeyna-Idle.PNG]: Skip
@@ -18,33 +18,33 @@ Laeyna[set_spr,Laeyna-Idle.PNG]: Skip
 Laeyna[set_spr,Laeyna-Idle.PNG]: Wait, what was that last part? Wait, wait why did the doors close?
 Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Alternate options are available in the menu. As you have selected the ‘lock in’ mode, you will not be allowed to leave until you have complete the first level
 Laeyna[set_spr,Laeyna-Idle.PNG]: WHAT!? 
-Florana[set_spr,Florana-Idle.PNG]: What happened
-Laeyna[set_spr,Laeyna-Idle.PNG]: I’ve been locked in!
-Florana[set_spr,Florana-Idle.PNG]: How?
-Laeyna[set_spr,Laeyna-Idle.PNG]: I…umm…I may have skipped something important
-Florana[set_spr,Florana-Doubtful.PNG]: Well…unskip it? Hold on, I’ll try to hack it
-Laeyna[set_spr,Laeyna-Excited.PNG]: Wait, there’s options! If I try smash it maybe that’ll fix things?
-Florana[set_spr,Florana-Shock.PNG]: Don’t smash it! That never works!
-:Laeyna smashes the screen
+Florana[set_spr,Florana-Idle.PNG;set_spr,06 - Hacker_s bedroom]: What happened
+Laeyna[set_spr,Laeyna-Idle.PNG;set_bg,07 - Inside Simulation Room]: I’ve been locked in!
+Florana[set_spr,Florana-Idle.PNG;set_spr,06 - Hacker_s bedroom]: How?
+Laeyna[set_spr,Laeyna-Idle.PNG;set_bg,07 - Inside Simulation Room]: I…umm…I may have skipped something important
+Florana[set_spr,Florana-Doubtful.PNG;set_spr,06 - Hacker_s bedroom]: Well…unskip it? Hold on, I’ll try to hack it
+Laeyna[set_spr,Laeyna-Excited.PNG;set_bg,07 - Inside Simulation Room]: Wait, there’s options! If I try smash it maybe that’ll fix things?
+Florana[set_spr,Florana-Shock.PNG;set_spr,06 - Hacker_s bedroom]: Don’t smash it! That never works!
+[set_bg,07 - Inside Simulation Room]:Laeyna smashes the screen
 Laeyna[set_spr,Laeyna-Excited.PNG]: Too late! I smashed it
 Hero[set_spr,Hero-Sim-Room-Glitch-3.PNG]: You have selected-you have-you-selected-difficulty-difficulty increase-merging data…error…error
 Laeyna[set_spr,Laeyna-Idle.PNG]: Hey Flor…
-Florana[set_spr,Florana-Idle.PNG]: Yeah?
-Laeyna[set_spr,Laeyna-Idle.PNG]: You may need to hack it afterall…
-Florana[set_spr,Florana-Idle.PNG]: About that…
-Laeyna[set_spr,Laeyna-Idle.PNG]: What?
-Florana[set_spr,Florana-Idle.PNG]: Whatever you just did affected the programs on my screen. Things are glitching and it’ll take me some time.
-Hero[set_spr,Hero-Sim-Room-Glitch-2.PNG]: Custom villain created, ‘Techmate’, multiple enemies combined, difficulty increased. Music set. Stage set. Begin
+Florana[set_spr,Florana-Idle.PNG;set_spr,06 - Hacker_s bedroom]: Yeah?
+Laeyna[set_spr,Laeyna-Idle.PNG;set_bg,07 - Inside Simulation Room]: You may need to hack it afterall…
+Florana[set_spr,Florana-Idle.PNG;set_spr,06 - Hacker_s bedroom]: About that…
+Laeyna[set_spr,Laeyna-Idle.PNG;set_bg,07 - Inside Simulation Room]: What?
+Florana[set_spr,Florana-Idle.PNG;set_spr,06 - Hacker_s bedroom]: Whatever you just did affected the programs on my screen. Things are glitching and it’ll take me some time.
+Hero[set_spr,Hero-Sim-Room-Glitch-2.PNG;set_bg,07 - Inside Simulation Room]: Custom villain created, ‘Techmate’, multiple enemies combined, difficulty increased. Music set. Stage set. Begin
 Laeyna[set_spr,Laeyna-Idle.PNG]: This looks like…
-Florana[set_spr,Florana-Doubtful.PNG]: Looks like what?
-Laeyna[set_spr,Villain-Idle.PNG]: One giant rhythm game! Where D & F corresponds to an air-hit and J & K for a ground-hit!
+Florana[set_spr,Florana-Doubtful.PNG;set_spr,06 - Hacker_s bedroom]: Looks like what?
+Laeyna[set_spr,Villain-Idle.PNG;set_bg,07 - Inside Simulation Room]: One giant rhythm game! Where D & F corresponds to an air-hit and J & K for a ground-hit!
 Laeyna[set_spr,Villain-Idle.PNG]: I can’t believe I’m in a rhythm game! Flo, is there anything you can do to get me out of here?
-Florana[set_spr,Florana-Idle.PNG]: I’m trying, but it’ll take some time! I’m kind of locked out too! What do you see?
-Laeyna[set_spr,Villain-Idle.PNG]: Giant strange monsters heading my way!
-Florana[set_spr,Florana-Idle.PNG]: Do you…think you can take them down?
-Laeyna[set_spr,Villain-Determined.PNG]: I don’t think so…I know so!
-Florana[set_spr,Florana-Idle.PNG]: Alright then, you just do what you’ve gotta do and I’ll find a way to hack you out!
-Techmate[set_spr,Techmate-Idle.PNG]: Well well well, you’ve reached the end!
+Florana[set_spr,Florana-Idle.PNG;set_spr,06 - Hacker_s bedroom]: I’m trying, but it’ll take some time! I’m kind of locked out too! What do you see?
+Laeyna[set_spr,Villain-Idle.PNG;set_bg,07 - Inside Simulation Room]: Giant strange monsters heading my way!
+Florana[set_spr,Florana-Idle.PNG;set_spr,06 - Hacker_s bedroom]: Do you…think you can take them down?
+Laeyna[set_spr,Villain-Determined.PNG;set_bg,07 - Inside Simulation Room]: I don’t think so…I know so!
+Florana[set_spr,Florana-Idle.PNG;set_spr,06 - Hacker_s bedroom]: Alright then, you just do what you’ve gotta do and I’ll find a way to hack you out!
+Techmate[set_spr,Techmate-Idle.PNG;set_bg,07 - Inside Simulation Room]: Well well well, you’ve reached the end!
 Laeyna[set_spr,Villain-Angry.PNG]: Who are you supposed to be?
 Techmate[set_spr,Techmate-Idle.PNG]: I am…
 Laeyna[set_spr,Villain-Angry.PNG]: Go on?

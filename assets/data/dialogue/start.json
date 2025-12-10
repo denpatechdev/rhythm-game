@@ -6,7 +6,14 @@
           "name": "",
           "text": "Two girls are watching the TV. It's Laeyna and Tiffania",
           "attrs": [],
-          "events": [],
+          "events": [
+            {
+              "name": "set_bg",
+              "args": [
+                "01 - Looking at TV"
+              ]
+            }
+          ],
           "choices": []
         },
         {
@@ -18,6 +25,12 @@
               "name": "set_spr",
               "args": [
                 "Interviewer-Idle.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "02 - Interview"
               ]
             }
           ],
@@ -183,8 +196,10 @@
           "attrs": [],
           "events": [
             {
-              "name": "clear_spr",
-              "args": []
+              "name": "set_bg",
+              "args": [
+                "03 - TV Off"
+              ]
             }
           ],
           "choices": []
@@ -291,7 +306,14 @@
           "name": "",
           "text": "Florana enters the room at that moment.",
           "attrs": [],
-          "events": [],
+          "events": [
+            {
+              "name": "set_bg",
+              "args": [
+                "04 - Talking about Code"
+              ]
+            }
+          ],
           "choices": []
         },
         {
@@ -529,7 +551,14 @@
           "name": "",
           "text": "...",
           "attrs": [],
-          "events": [],
+          "events": [
+            {
+              "name": "set_bg",
+              "args": [
+                "05 - Outside Simulation Room"
+              ]
+            }
+          ],
           "choices": []
         },
         {
@@ -541,6 +570,12 @@
               "name": "set_spr",
               "args": [
                 "Florana-Shock.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
               ]
             }
           ],
@@ -556,6 +591,11 @@
               "args": [
                 "Laeyna-Idle.PNG"
               ]
+            },            {
+              "name": "set_bg",
+              "args": [
+                "05 - Outside Simulation Room"
+              ]
             }
           ],
           "choices": []
@@ -569,6 +609,12 @@
               "name": "set_spr",
               "args": [
                 "Florana-Idle.PNG"
+              ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
               ]
             }
           ],
@@ -584,6 +630,11 @@
               "args": [
                 "Laeyna-Idle.PNG"
               ]
+            },            {
+              "name": "set_bg",
+              "args": [
+                "05 - Outside Simulation Room"
+              ]
             }
           ],
           "choices": []
@@ -598,6 +649,12 @@
               "args": [
                 "Florana-Doubtful.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "06 - Hackers bedroom"
+              ]
             }
           ],
           "choices": []
@@ -611,6 +668,11 @@
               "name": "set_spr",
               "args": [
                 "Laeyna-Excited.PNG"
+              ]
+            },            {
+              "name": "set_bg",
+              "args": [
+                "05 - Outside Simulation Room"
               ]
             }
           ],

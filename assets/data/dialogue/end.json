@@ -12,6 +12,12 @@
               "args": [
                 "Florana-Idle.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
+              ]
             }
           ],
           "choices": []
@@ -34,7 +40,14 @@
           "name": "",
           "text": "...",
           "attrs": [],
-          "events": [],
+          "events": [
+            {
+              "name": "set_bg",
+              "args": [
+                "10 - Credits"
+              ]
+            }
+          ],
           "choices": []
         },
         {

@@ -1,5 +1,5 @@
 ///start
-Laeyna[set_spr,Laeyna-Excited.PNG]: I’ve done it-
+Laeyna[set_spr,Laeyna-Excited.PNG;set_bg,07 - Inside Simulation Room]: I’ve done it-
 Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Congratulations on beating the level!
 Laeyna[set_spr,Laeyna-Idle.PNG]: Florana, have you managed to-
 Florana[set_spr,Florana-Idle.PNG]: I’m in! Just need to hack you out but I’ve gained access! Give me precisely the length of one more techno song and you’ll be out of there in no time!

@@ -278,7 +278,10 @@ class PlayState extends FlxState
 	}
 	
 	function setBG(args:Array<Dynamic>, isChoice:Bool) {
-		bg.loadGraphic(args[0]);
+		bg.loadGraphic('assets/images/bg/' + args[0] + '.png');
+		bg.setGraphicSize(FlxG.width, FlxG.height);
+		bg.updateHitbox();
+		bg.setPosition(0, 0);
 	}
 
 	var spritesToClear:Array<FlxSprite> = [];

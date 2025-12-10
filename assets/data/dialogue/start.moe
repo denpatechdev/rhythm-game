@@ -1,6 +1,6 @@
 ///start
-: Two girls are watching the TV. It's Laeyna and Tiffania
-Interviewer[set_spr,Interviewer-Idle.PNG]: So I’ve been told you’re working on a super cool project!
+[set_bg,01 - Looking at TV]: Two girls are watching the TV. It's Laeyna and Tiffania
+Interviewer[set_spr,Interviewer-Idle.PNG;set_bg,02 - Interview.png]: So I’ve been told you’re working on a super cool project!
 Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Mmhmm
 Interviewer[set_spr,Interviewer-Idle.PNG]: Are you able to tell us anything about it?
 Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Of course! Otherwise I wouldn’t be on interview, right? Haha
@@ -12,7 +12,7 @@ Interviewer[set_spr,Interviewer-Idle.PNG]: WOW! That’s amazing!
 Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Yeah, it is pretty cool
 Interviewer[set_spr,Interviewer-Idle.PNG]: So what does it do?
 Hero[set_spr,Hero-Sim-Room-Idle.PNG]: Well, without giving too much away, it uses data captured on my encounters with a couple villains and created augmented reality training courses to learn self defence and martial arts!
-[clear_spr]: Laeyna turns off the TV
+[set_bg,set_bg,03 - TV Off]: Laeyna turns off the TV
 Tiffania[set_spr,Tiffania-Angry.PNG]: Hey! Why’d you turn it off, I was watching that!
 Laeyna[set_spr,Laeyna-Excited.PNG]: Didn’t you hear? He’s created a simulation room!
 Tiffania[set_spr,Tiffania-Idle.PNG]: Yeah, that’s kinda cool!
@@ -20,7 +20,7 @@ Laeyna[set_spr,Laeyna-Excited.PNG]: If I can get my hands on that code, I can ma
 Tiffania[set_spr,Tiffania-Idle.PNG]: And do what?
 Laeyna[set_spr,Laeyna-Happy.png]: Villainous deeds!
 TiffaniaTiffania[set_spr,Tiffania-Idle.PNG]: Well, tough luck, you’re no hacker girl
-: Florana enters the room at that moment.
+[set_bg,04 - Talking about Code]: Florana enters the room at that moment.
 FloranaTiffania[set_spr,Florana-Idle.PNG]: Hey girls, what did I miss?
 : Laeyna smirks at Tiffania.
 Tiffania[set_spr,Tiffania-Idle.PNG]: Oh no…
@@ -38,7 +38,7 @@ Laeyna[set_spr,Laeyna-Happy.png]: Just trust me, it’s too much to explain
 Florana[set_spr,Florana-Idle.PNG]: Tiffania, are you taking part in this hackathon?
 [set_spr,Laeyna-Idle.PNG]: Laeyna gives Tiffania a look to say ‘shh not a word’
 Tiffania[set_spr,Tiffania-Idle.PNG]: Nope. I’m not taking part in anything. I have better things to do
-:...
+[set_bg,05 - Outside Simulation Room]:...
 Florana[set_spr,Florana-Shock.PNG]: Wow, this code…it’s kinda intense… 
 Laeyna[set_spr,Laeyna-Idle.PNG]: Is it? Umm…you’ve got this though, right?
 Florana[set_spr,Florana-Idle.PNG]: Yeah but…it’ll take me some time!

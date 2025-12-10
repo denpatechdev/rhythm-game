@@ -12,6 +12,12 @@
               "args": [
                 "Laeyna-Excited.PNG"
               ]
+            },
+            {
+              "name": "set_bg",
+              "args": [
+                "07 - Inside Simulation Room"
+              ]
             }
           ],
           "choices": []
